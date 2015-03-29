@@ -1,0 +1,6 @@
+#Wed Mar 04 08:30:51 GMT 2015
+.*outlook.*=smtp-mail.outlook.com
+.*hotmail.*=smtp.live.com
+.*yahoo.*=smtp.mail.yahoo.com
+.*zoho.*=smtp.zoho.com
+.*gmail.*=smtp.gmail.com
