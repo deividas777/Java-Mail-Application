@@ -1345,6 +1345,8 @@ public class Google extends JFrame{
 		});
 		chckbxHideMessage.setBounds(459, 129, 139, 18);
 		contentPane.add(chckbxHideMessage);
+		
+		
 	/**
 	 * @Select from MySQL or Sqlite databases method
 	 */
