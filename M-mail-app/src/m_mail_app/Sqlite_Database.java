@@ -13,8 +13,9 @@ public class Sqlite_Database {
 	
 	public static void main(String[] args){
 		
-		//dbConnector();
+		dbConnector();
 		//update("Gabriele", "Onaityte", "232334", "gabi@gmail.com", "Tramore", "Otilija");
+		insert(4, "ddd", "fff", 343, "dddd", "wdddd", "ddd", "der@sdeer.com");
 		
 	}
 	
@@ -90,7 +91,7 @@ public class Sqlite_Database {
 	 * @param userEmail
 	 */
 	
-	public static void insert(long userID, String userName, String userSurname, long userPhone, String userAddress, String userNic, String userPassword, String userEmail){
+	public static void insert(int userID, String userName, String userSurname, int userPhone, String userAddress, String userNic, String userPassword, String userEmail){
 		  
 		   Statement statement = null;
 		   
@@ -144,7 +145,7 @@ public class Sqlite_Database {
 	 * @param userId
 	 */
 	
-	public static void update(long userID, String userName, String userSurname, long userPhone, String userAddress, String userNic, String userPassword, String userEmail, String userId){
+	public static void update(int userID, String userName, String userSurname, int userPhone, String userAddress, String userNic, String userPassword, String userEmail, String userId){
 		   		 
 		 PreparedStatement statement = null;
 		 
@@ -194,5 +195,4 @@ public class Sqlite_Database {
 		   }
 		 
 	   }//end update()
-
 }
