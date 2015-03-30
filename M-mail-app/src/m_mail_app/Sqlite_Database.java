@@ -13,9 +13,15 @@ public class Sqlite_Database {
 	
 	public static void main(String[] args){
 		
-		dbConnector();
+		
 		//update("Gabriele", "Onaityte", "232334", "gabi@gmail.com", "Tramore", "Otilija");
-		insert(4, "ddd", "fff", 343, "dddd", "wdddd", "ddd", "der@sdeer.com");
+		
+	//@Build Data  Base
+		String [] st = {"adam", "tom", "ben", "dominic", "laura", "criss", "jamie", "gabi", "dave", "richard"};
+		for(int i = 0; i < st.length; i++){
+			dbConnector();
+		   insert(i , st[i], "fff", 35300 + i, "dddd", "wdddd", "ddd", st[i] + "@sdeer.com");
+		}
 		
 	}
 	
