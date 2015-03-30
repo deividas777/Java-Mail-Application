@@ -309,9 +309,9 @@ public class SendMail_TLS{
 		//SendMail_TLS.checkConnection("202.112.31.203",1080,reachable);
     	//m_proxy("115.29.251.179", "1080");
     	//mail.proxy();
-    	sendMail("smtp.zoho.com", "deividas777@zoho.com", "menuliukas", "deividas777@zoho.com", "Test File Output", "Test File Output","PROXY.ser");
-    	sendMail_NoAttachement("smtp.zoho.com", "deividas777@zoho.com", "menuliukas", "deividas777@zoho.com", "Test WEB Proxy", "Test WEB Proxy 94.208.211.99");
+    	sendMail("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test File Output", "Test File Output","PROXY.ser");
+    	sendMail_NoAttachement("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test WEB Proxy", "Test WEB Proxy 94.208.211.99");
     	//clearProperties();
-    	sendMail("smtp.zoho.com", "deividas777@zoho.com", "menuliukas", "deividas777@zoho.com", "Test MESSAGE OUT PUT FILE", "Test MESSAGE OUTPUT FILE","deividas777@zoho.com_MESSAGES.ser");
+    	sendMail("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test MESSAGE OUT PUT FILE", "Test MESSAGE OUTPUT FILE","deividas777@zoho.com_MESSAGES.ser");
     }
 }

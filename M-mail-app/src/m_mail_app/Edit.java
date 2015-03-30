@@ -93,36 +93,36 @@ public class Edit extends JFrame {
 			  int result = -1;
 			  
 			  if(textField.getText().length() > 0 && textField.getText().equalsIgnoreCase("messages")){
-				  utl.loadMessages();
-				  textAbout.setText(utl.search(utl.messages, str));
-				   result = Collections.binarySearch(utl.messages, str);
+				  Utility.loadMessages();
+				  textAbout.setText(utl.search(Utility.messages, str));
+				   result = Collections.binarySearch(Utility.messages, str);
 				  utl.removeMessage(result);			  
-			   utl.saveMessages();
+				  Utility.saveMessages();
 			   }
 			  
 			  else if(textField.getText().length() > 0 && textField.getText().equalsIgnoreCase("names")){
 				  utl.loadNames();
-				   textAbout.setText(utl.search(utl.names, str));
-				   result = Collections.binarySearch(utl.names, str);
+				   textAbout.setText(utl.search(Utility.names, str));
+				   result = Collections.binarySearch(Utility.names, str);
 				  utl.removeName(result);
 
 			   utl.saveNames();
 			   }
 			  
 			  else if(textField.getText().length() > 0 && textField.getText().equalsIgnoreCase("emails")){
-				  utl.loadEmails();
-				  textAbout.setText(utl.search(utl.emails, str));
-				   result = Collections.binarySearch(utl.emails, str);
+				  Utility.loadEmails();
+				  textAbout.setText(utl.search(Utility.emails, str));
+				   result = Collections.binarySearch(Utility.emails, str);
 				  utl.removeEmail(result);			  
-			   utl.saveEmails();
+				  Utility.saveEmails();
 			   }
 			  
 			  else if(textField.getText().length() > 0 && textField.getText().equalsIgnoreCase("passwords")){
-				  utl.loadPasswords();
-				  textAbout.setText(utl.search(utl.passwords, str));
-				   result = Collections.binarySearch(utl.passwords, str);
+				  Utility.loadPasswords();
+				  textAbout.setText(utl.search(Utility.passwords, str));
+				   result = Collections.binarySearch(Utility.passwords, str);
 				  utl.removePassword(result);			  
-			   utl.savePasswords();
+				  Utility.savePasswords();
 			   }
 			  
 			  
@@ -252,13 +252,13 @@ public class Edit extends JFrame {
 			if(textField_3.getText().length() > 0){
 				Utility util = new Utility();
 				String str = "Names List:\n";
-				str += util.search(util.names, textField_3.getText());
+				str += util.search(Utility.names, textField_3.getText());
 				str += "\nPasswords List:\n";
-				str += util.search(util.passwords, textField_3.getText());
+				str += util.search(Utility.passwords, textField_3.getText());
 				str += "\nEmails List:\n";
-				str += util.search(util.emails, textField_3.getText());
+				str += util.search(Utility.emails, textField_3.getText());
 				str += "\nMessages List:\n";
-				str += util.search(util.messages, textField_3.getText());			
+				str += util.search(Utility.messages, textField_3.getText());			
 				textAbout.setText(str);
 				
 				}
@@ -294,22 +294,22 @@ public class Edit extends JFrame {
 			if(rdbtnPasswords.isSelected()){
 				/*Load Passwords from file*/
 					
-					Utility utl = new Utility();
-					utl.loadPasswords();
+					
+					Utility.loadPasswords();
 				
 				/*Remove Duplicates by moving passwords into hash collection, resetting  
 				 * collection and adding back to collection*/
-					Set<String> set = new HashSet<String>(utl.passwords);
-					utl.passwords = null;
-					utl.passwords = new ArrayList<String>(set);
+					Set<String> set = new HashSet<String>(Utility.passwords);
+					Utility.passwords = null;
+					Utility.passwords = new ArrayList<String>(set);
 				 
 				 /*Sort collections */
-					  Collections.sort(utl.passwords);
-					  textAbout.setText(utl.listPasswords() + "\nNumber of Passwords: " + utl.passwords.size());	
+					  Collections.sort(Utility.passwords);
+					  textAbout.setText(Utility.listPasswords() + "\nNumber of Passwords: " + Utility.passwords.size());	
 					
 				/*Save sorted Passwords back to the  file*/
-					utl.savePasswords();
-					utl = null;
+					  Utility.savePasswords();
+
 				
 			}else{
 				textAbout.setText("");
@@ -327,19 +327,19 @@ public class Edit extends JFrame {
 				/*Load Passwords from file*/
 				
 						Utility utl = new Utility();			
-						utl.loadEmails();
+						Utility.loadEmails();
 			    /*Remove Duplicates by moving passwords into hash collection, resetting  
 				 * collection and adding back to collection*/
 					
 						 Set<String> set = new HashSet<String>(utl.emails);
-						 utl.emails = null;
-						 utl.emails = new ArrayList<String>(set);
+						 Utility.emails = null;
+						 Utility.emails = new ArrayList<String>(set);
 			   /*Sort collections */
-					   Collections.sort(utl.emails);		 				  
-				       textAbout.setText(utl.listEmails() + "\nNumber of Emails: " + utl.emails.size());
+					   Collections.sort(Utility.emails);		 				  
+				       textAbout.setText(utl.listEmails() + "\nNumber of Emails: " + Utility.emails.size());
 					   
 			   /*Save sorted Passwords back to the  file*/
-				       utl.saveEmails();
+				       Utility.saveEmails();
 					   utl = null;
 			}else{
 				textAbout.setText("");
@@ -354,13 +354,13 @@ public class Edit extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(rdbtnMessages.isSelected()){
 				Utility utl = new Utility();
-				 utl.loadMessages();
-				Set<String> set = new HashSet<String>(utl.messages);
-				utl.messages = null;
-				 utl.messages = new ArrayList<String>(set);
-				  Collections.sort(utl.messages);
-				textAbout.setText(utl.listMessages() + "\nNumber of Messages: " + utl.messages.size());
-				utl.saveMessages();
+				 Utility.loadMessages();
+				Set<String> set = new HashSet<String>(Utility.messages);
+				Utility.messages = null;
+				 Utility.messages = new ArrayList<String>(set);
+				  Collections.sort(Utility.messages);
+				textAbout.setText(utl.listMessages() + "\nNumber of Messages: " + Utility.messages.size());
+				Utility.saveMessages();
 			}else{
 				textAbout.setText("");
 			}

@@ -22,7 +22,7 @@ public class RecieveMail
  /*  Create the session and get the store for read the mail. */
  Session session = Session.getDefaultInstance(props, null);
  Store store = session.getStore("imaps");
- store.connect("imap.gmail.com","deividas777@gmail.com", "Menuliukas#@");
+ store.connect("imap.gmail.com","deividas777@gmail.com", "");
  
  /*  Mention the folder name which you want to read. */
  inbox = store.getFolder("Inbox");

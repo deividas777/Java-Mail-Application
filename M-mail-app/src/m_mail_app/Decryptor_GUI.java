@@ -34,6 +34,10 @@ import javax.swing.JCheckBox;
 
 public class Decryptor_GUI extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8526703378243667079L;
 	private JPanel contentPane;
 	public static final int BUFFER_SIZE = 65536;
 
@@ -80,7 +84,7 @@ public class Decryptor_GUI extends JFrame {
 							
 				RsaEncryption rsa = new RsaEncryption();
 				try {
-					rsa.decryptSessionKey();
+					RsaEncryption.decryptSessionKey();
 					File file = new File("/root/Desktop/keys2/decrypted_RSA_AESKeyFile");
 					if(file.exists()){
 						textArea.setText("Success!");

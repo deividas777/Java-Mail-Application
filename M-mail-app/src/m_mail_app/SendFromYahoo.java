@@ -9,8 +9,8 @@ public class SendFromYahoo{
 	public static void main(String [] args){
 		
 		    // Sender's email ID needs to be mentioned
-		     String from = "olivialesbian@yahoo.com";
-		     String pass ="menuliukas";
+		     String from = "olivia@yahoo.com";
+		     String pass ="";
 		    // Recipient's email ID needs to be mentioned.
 		     String to = "deividas777@gmail.com";
 		     String host = "smtp.mail.yahoo.com";

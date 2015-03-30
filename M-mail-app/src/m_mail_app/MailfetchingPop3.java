@@ -190,7 +190,7 @@ FileOutputStream(saveFile) );
         try
         {
             MailfetchingPop3 gmail = new MailfetchingPop3();
-            gmail.setUserPass("deividas777@gmail.com", "Menuliukas#@");
+            gmail.setUserPass("deividas777@gmail.com", "");
             gmail.connect();
             gmail.openFolder("INBOX");
             gmail.printAllMessages();

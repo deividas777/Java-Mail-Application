@@ -48,15 +48,18 @@ public class SQL_Database extends JFrame {
 	private JPanel contentPane;
 	
 	public JTextField search;
+	
 	/**
 	 * @Fields used to get user and password details
 	 */
+	
 	private static JPasswordField password_Field = new JPasswordField();
 	public JTextField userName = new JTextField();
 	
 	/**
 	 * @Fields used in Create and Update form
 	 */
+	
 	public JTextField user_Id = new JTextField();
 	public JTextField user_Name = new JTextField();
 	public JTextField user_Surname = new JTextField();
@@ -313,7 +316,8 @@ public class SQL_Database extends JFrame {
 							Sqlite_Database.dbConnector();
 							Sqlite_Database.insert(id, user, surname, phone_number, address, nic, password, email);
 					}else{
-						showMessageDialog("Wrong Email Address! Try Again ...");					
+						showMessageDialog("Wrong Email Address! Try Again ...");	
+						
 					}
 			 }else{
 				 
@@ -586,9 +590,6 @@ public class SQL_Database extends JFrame {
 		    			         });
 							
 						}//end if(connection != null)
-						
-						
-						
 						
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block

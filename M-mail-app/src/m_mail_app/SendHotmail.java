@@ -58,7 +58,7 @@ public class SendHotmail {
 	 SendHotmail send = new SendHotmail();
 	 //send.sendMailHotmail(587,"smtp.live.com","deividas777@hotmail.com","dominykas98","deividas777@gmail.com","Test","Testing TOR Proxy!!!");
 	 //send.sendMailHotmail(587,"smtp.mail.yahoo.com","olivialesbian@yahoo.com","menuliukas123","deividas777@gmail.com","Test","Testing TOR Proxy!!!");
-	 send.sendMail("smtp.gmail.com","deividas777@gmail.com","Menuliukas#@","deividas777@gmail.com","Test","Testing TOR Proxy!!!");
+	 send.sendMail("smtp.gmail.com","deividas777@gmail.com","","deividas777@gmail.com","Test","Testing TOR Proxy!!!");
 
 	 //send.send2("deividas777@hotmail.com","dominykas98","deividas777@gmail.com","Test","Test Hotmail");	
 	}

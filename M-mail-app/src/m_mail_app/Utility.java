@@ -23,6 +23,10 @@ import javax.naming.directory.BasicAttributes;
 
 public class Utility implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static List<String> names =  new ArrayList<String>();
 	private List<Integer> numbers = new ArrayList<Integer>();
 	private List<Character> characters = new ArrayList<Character>();
@@ -202,7 +206,8 @@ public class Utility implements Serializable{
     
     public static void oneSec() {
         try {
-          Thread.currentThread().sleep(20000);
+          Thread.currentThread();
+		Thread.sleep(20000);
           }
         catch (InterruptedException e) {
           e.printStackTrace();
