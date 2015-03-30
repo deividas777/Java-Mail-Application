@@ -185,7 +185,7 @@ public class SQL_Database extends JFrame {
 				userName1 = userName.getText();
 				password1 = password_Field.getSelectedText();
 											
-				FirstExample.search("jdbc:mysql://localhost/phplogin", userName1, password1, search1);
+				FirstExample.search( userName1, password1, search1);
 				
 			    try {
 					BufferedReader br = new BufferedReader(new FileReader("search.ser"));
@@ -209,7 +209,7 @@ public class SQL_Database extends JFrame {
 		
 		else{
 			
-		        FirstExample.search("jdbc:mysql://localhost/phplogin", userName1, password1, search1);		
+		        FirstExample.search(userName1, password1, search1);		
 		         
 		    try {
 				BufferedReader br = new BufferedReader(new FileReader("search.ser"));
@@ -249,24 +249,55 @@ public class SQL_Database extends JFrame {
 				
 			if(userName1 != null){	
 				
-				showForm("Create User");
+				showForm("Create User Form");
 			//@Variables
-				String userId = user_Id.getText().trim();
-				String user = user_Name.getText().trim();
-				String surname = user_Surname.getText().trim();
-				String phone = user_Phone.getText().trim();						
-				String address = user_Address.getText().trim();
-				String nic = user_Nic.getText().trim();
+				String userId = user_Id.getText().replaceAll("\\W", "").trim();
+				String user = user_Name.getText().replaceAll("\\W", "").trim();
+				String surname = user_Surname.getText().replaceAll("\\W", "").trim();
+				String phone = user_Phone.getText().replaceAll("\\W", "").trim();						
+				String address = user_Address.getText().replaceAll("\\W", "").trim();
+				String nic = user_Nic.getText().replaceAll("\\W", "").trim();
 				String password = user_Password.getText();
 				String email = user_Email.getText().trim();
 				
-				userId.replaceAll("\\W", "");
-				user.replaceAll("\\W", "");
-				surname.replaceAll("\\W", "");
-				phone.replaceAll("\\W", "");
-				address.replaceAll("\\W", "");
-				nic.replaceAll("\\W", "");
-				password.replaceAll("\\W", "");
+				//@Remove unwanted 	characters from Strings
+				List<String> list = new ArrayList<String>();
+				List<String> sorted = new ArrayList<String>();
+				list.add(userId);
+				list.add(user);
+				list.add(surname);
+				list.add(phone);
+				list.add(address);
+				list.add(nic);
+				list.add(password);
+				list.add(email);
+				
+				//@Remove elements	
+				 for(int i = 0; i < list.size();i++){
+					 
+					 StringTokenizer tokenizer = new StringTokenizer(list.get(i), "// //,//�//<//>//://;//!//()//?//)//#//=//{//}//(//)//[//]//|//\\//+//-//_//*//&//%//$//^//“//„//'//~//'//");								
+					 
+					 while(tokenizer.hasMoreElements()){								   								   
+						        String st = tokenizer.nextToken();
+						        st = Normalizer.normalize(st, Normalizer.Form.NFD);
+						        String result = st.replaceAll("[^\\x00-\\x7F]", "").replaceAll("[^\\p{ASCII}]", "");
+						        result.replaceAll("[^a-zA-Z0-9\\s]", "");
+						        sorted.add(result);
+					   }
+				 }
+				 
+				    userId = sorted.get(0);
+					user = sorted.get(1);
+					surname = sorted.get(2);
+					phone = sorted.get(3);
+					address = sorted.get(4);
+					nic = sorted.get(5);
+					password = sorted.get(6);
+				
+				//@Check Strings in sorted list
+					for(String s: sorted){
+                      System.out.println(s);
+					}
 				
 				
 				int id = Integer.parseInt(userId);
@@ -285,20 +316,21 @@ public class SQL_Database extends JFrame {
 						showMessageDialog("Wrong Email Address! Try Again ...");					
 					}
 			 }else{
+				 
 				 showLoginForm();
 				 userName1 = userName.getText().trim();
 				 password1 = password_Field.getSelectedText();
 				 
-				 showForm("Create Form");
-					//@Variables
-				        String userId = user_Id.getText();
-						String user = user_Name.getText().trim();
-						String surname = user_Surname.getText().trim();
-						String phone = user_Phone.getText().trim();						
-						String address = user_Address.getText().trim();
-						String nic = user_Nic.getText();
-						String password = user_Password.getText();
-						String email = user_Email.getText().trim();
+				 showForm("Create User Form");
+				//@Variables
+					String userId = user_Id.getText().replaceAll("\\W", "").trim();
+					String user = user_Name.getText().replaceAll("\\W", "").trim();
+					String surname = user_Surname.getText().replaceAll("\\W", "").trim();
+					String phone = user_Phone.getText().replaceAll("\\W", "").trim();						
+					String address = user_Address.getText().replaceAll("\\W", "").trim();
+					String nic = user_Nic.getText().replaceAll("\\W", "").trim();
+					String password = user_Password.getText();
+					String email = user_Email.getText().trim();
 						
 					//@Remove unwanted 	characters from Strings
 						List<String> list = new ArrayList<String>();
@@ -333,7 +365,8 @@ public class SQL_Database extends JFrame {
 						address = sorted.get(4);
 						nic = sorted.get(5);
 						password = sorted.get(6);
-						
+					
+					//@Perform Check Strings in sorted list
 						for(String s: sorted){
                              System.out.println(s);
 						}

@@ -14,7 +14,14 @@ import org.json.simple.JSONObject;
 
 
 public class FirstExample {
+	
+	/*
+	 * @Global Variables
+	 */
+	public static boolean check_connection = false;
+	
    // JDBC driver name and database URL
+   static Connection connection  = null;
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:mysql://localhost/phplogin";
 
@@ -45,10 +52,58 @@ public class FirstExample {
 		
 	   }
 	 
+	 /**
+	  * 
+	  * @param DB_USER
+	  * @param DB_PASS
+	  * @return
+	  * 
+	  * @Method performs connection validation function
+	  */
 	 
-	 public static void update(String DB_USER, String DB_PASS,long userID, String userName, String userSurname, long userPhone, String userAddress, String userNic, String userPassword, String userEmail, String userId){
+	 public static Connection dbConnector(String DB_USER, String DB_PASS){
+			
+			try{
+				
+				Class.forName(JDBC_DRIVER);
+				connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+				JOptionPane.showMessageDialog(null, "Connection Successfull ... Connected To Local DataBase  ");
+				return connection;
+				
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(null, e);
+				return null;
+			}finally{
+				try{
+					if(connection != null){
+						connection.close();
+						check_connection = true;
+						}
+					}catch(SQLException ex){
+						JOptionPane.showMessageDialog(null, ex);
+					}
+				}
+			}
+			
+		
+	 /**
+	  * 
+	  * @param DB_USER
+	  * @param DB_PASS
+	  * @param userID
+	  * @param userName
+	  * @param userSurname
+	  * @param userPhone
+	  * @param userAddress
+	  * @param userNic
+	  * @param userPassword
+	  * @param userEmail
+	  * @param userId
+	  */
+	 
+	 public static void update(String DB_USER, String DB_PASS,int userID, String userName, String userSurname, int userPhone, String userAddress, String userNic, String userPassword, String userEmail, String userId){
 		   
-		 Connection connection = null;
+		 //Connection connection = null;
 		 PreparedStatement statement = null;
 		 
 		 try{
@@ -96,7 +151,7 @@ public class FirstExample {
 			            statement.close();
 			         }
 			      }catch(SQLException se2){
-			      }// nothing we can do
+			      }
 			      try{
 			         if(connection != null){
 			            connection.close();
@@ -108,6 +163,15 @@ public class FirstExample {
 		 
 	   }
 	   
+   /**
+    * 
+    * @param user
+    * @param pass
+    * @param delete_user
+    * 
+    * @Methid Deletes user from database
+    */
+	 
    public static void delete(String user, String pass, String delete_user){
 	   
 	   Connection connection = null;
@@ -151,6 +215,22 @@ public class FirstExample {
 		      }//end finally try
 		}
    }
+   
+   /**
+    * 
+    * @param user
+    * @param pass
+    * @param userID
+    * @param userName
+    * @param userSurname
+    * @param userPhone
+    * @param userAddress
+    * @param userNic
+    * @param userPassword
+    * @param userEmail
+    * 
+    * @Method creates new record in DB
+    */
 
    public static void insert(String user, String pass, long userID, String userName, String userSurname, long userPhone, String userAddress, String userNic, String userPassword,  String userEmail){
 	  
@@ -200,8 +280,16 @@ public class FirstExample {
 	   }
    }
    
-   
-   public static void search(String url,String user, String pass, String search) {
+   /**
+    * 
+    * @param url
+    * @param user
+    * @param pass
+    * @param search
+    * 
+    * @Method searches for record in DB 
+    */
+   public static void search(String user, String pass, String search) {
    
 	   Connection conn = null;
        Statement stmt = null;
@@ -216,7 +304,7 @@ public class FirstExample {
       
      // conn = DriverManager.getConnection(DB_URL,USER,PASS);
       
-      conn = DriverManager.getConnection(url,user,pass);
+      conn = DriverManager.getConnection(DB_URL,user,pass);
      
       //STEP 4: Execute a query
 		      System.out.println("Creating statement...");
@@ -283,7 +371,7 @@ public class FirstExample {
 	         System.out.println("Writing to: tmp.json");
     	}
 	    
-         //@Convert string to integer
+         //@Convert integer to String
             String phone_number = Integer.toString(number); 
             
          //Display values and write into a file                  
@@ -306,7 +394,7 @@ public class FirstExample {
       //STEP 6: Clean-up environment
 	      rs.close();
 	      stmt.close();
-	      conn.close();
+	      
 	   }catch(SQLException se){
 	      //Handle errors for JDBC
 	       //se.printStackTrace();
