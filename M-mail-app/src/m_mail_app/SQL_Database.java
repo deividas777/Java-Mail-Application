@@ -269,8 +269,8 @@ public class SQL_Database extends JFrame {
 				password.replaceAll("\\W", "");
 				
 				
-				long id = Integer.parseInt(userId);
-				long phone_number = Integer.parseInt(phone);
+				int id = Integer.parseInt(userId);
+				int phone_number = Integer.parseInt(phone);
 				
 				Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 				Matcher matcher = pattern.matcher(email);
@@ -338,8 +338,8 @@ public class SQL_Database extends JFrame {
                              System.out.println(s);
 						}
 						
-						long id = Integer.parseInt(userId);
-						long phone_number = Integer.parseInt(phone);
+						int id = Integer.parseInt(userId);
+						int phone_number = Integer.parseInt(phone);
 						
 						Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 						Matcher matcher = pattern.matcher(email);
@@ -521,8 +521,8 @@ public class SQL_Database extends JFrame {
 		    				JOptionPane.showConfirmDialog(frame, fields, "Update Form", JOptionPane.OK_CANCEL_OPTION);
 		    				
 		    				
-		    			long userId = Integer.parseInt(user_Id.getText());
-		    			long userPhone = Integer.parseInt(user_Phone.getText());
+		    			int userId = Integer.parseInt(user_Id.getText());
+		    			int userPhone = Integer.parseInt(user_Phone.getText());
 		    				
 		    			//@Execute SQL update method	
 		    				FirstExample.update(userName1, password1, userId, user_Name.getText(), user_Surname.getText(), userPhone, user_Address.getText(), user_Nic.getText(), user_Password.getText(), user_Email.getText(), table_click);
