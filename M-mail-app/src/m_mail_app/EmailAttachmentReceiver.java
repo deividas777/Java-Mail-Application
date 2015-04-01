@@ -251,8 +251,8 @@ public class EmailAttachmentReceiver {
     public static void main(String[] args) {
        
         String host = "pop.zoho.com";
-        String userName = "deividas777@zoho.com";
-        String password = "menuliukas";
+        String userName = "@zoho.com";
+        String password = "";
  
         //create directory if does not exists
         File file = new File("/root/Attachment");
