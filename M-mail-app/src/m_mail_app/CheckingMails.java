@@ -13,9 +13,11 @@ import javax.mail.Store;
 
 public class CheckingMails {
 
-   public static void check(String host, String storeType, String user,
-      String password) 
-   {
+   
+	
+   public void check(String host, String storeType, final String user,final String password){
+	   
+	   
       try {
 
       // create properties field
@@ -29,8 +31,7 @@ public class CheckingMails {
       Session emailSession = Session.getInstance(properties,
          new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-               return new PasswordAuthentication(
-                  "olivialesbian@yahoo.com", "menuliukas123");
+               return new PasswordAuthentication(user, password);
             }
          });
       // emailSession.setDebug(true);
@@ -79,7 +80,8 @@ public class CheckingMails {
       String username = "olivialesbian@yahoo.com";// change accordingly
       String password = "menuliukas123";// change accordingly
 
-      check(host, mailStoreType, username, password);
+      CheckingMails test = new CheckingMails();
+      test.check(host, mailStoreType, username, password);
 
    }
 

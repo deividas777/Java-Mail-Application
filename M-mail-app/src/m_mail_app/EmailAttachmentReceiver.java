@@ -32,6 +32,7 @@ import javax.mail.internet.MimeBodyPart;
  *
  */
 public class EmailAttachmentReceiver {
+	
 	/**
 	 * Global Variables
 	 */
@@ -62,9 +63,13 @@ public class EmailAttachmentReceiver {
 	    System.out.println("TOR is selected!");
 	}
     
-    /*
-	 * Manual sock's proxies, http proxies not working must use socks 4 or 5
-	 */
+   /**
+    * 
+    * @param host
+    * @param port
+    * 
+    * Manual sock's proxies, http proxies not working must use socks 4 or 5
+    */
 	public static void m_proxy(String host, String port){		
 		
 		properties.setProperty("proxySet","true");
@@ -80,7 +85,8 @@ public class EmailAttachmentReceiver {
 	}
     /**
      * Sets the directory where attached files will be stored.
-     * @param dir absolute path of the directory
+     * dir absolute path of the directory
+     * @param dir
      */
     public static void setSaveDirectory(String dir) {
         saveDirectory = dir;

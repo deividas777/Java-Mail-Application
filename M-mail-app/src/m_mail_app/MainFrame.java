@@ -70,26 +70,9 @@ public class MainFrame extends JFrame {
 		JMenu mnNewMenu_1 = new JMenu("Properties");
 		menuBar.add(mnNewMenu_1);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Contacts Generator");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				dispose();
-				contact_list list = new contact_list();
-				list.setVisible(true);
-			}
-		});
-		mnNewMenu_1.add(mntmNewMenuItem_1);
 		
-		JMenuItem mntmMailGenerator = new JMenuItem("Mail Generator");
-		mntmMailGenerator.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				E_Mail_Gen gen = new E_Mail_Gen();
-				gen.setVisible(true);
-			}
-		});
-		mnNewMenu_1.add(mntmMailGenerator);
+		
+		
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Edit List");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
@@ -100,25 +83,9 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Encryption");
-		mntmNewMenuItem_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-				EncryptMessages encrypt = new EncryptMessages();
-				encrypt.setVisible(true);
-			}
-		});
-		mnNewMenu_1.add(mntmNewMenuItem_4);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Google Password Hack");
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-				GoogleHackPassword hack = new GoogleHackPassword();
-				hack.setVisible(true);
-			}
-		});
-		mnNewMenu_1.add(mntmNewMenuItem_3);
+		
+		
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_2 = new JMenu("About");
@@ -146,16 +113,7 @@ public class MainFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 			
-		JButton btnLocalHost = new JButton("Local Host");
-		btnLocalHost.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				GUI gui = new GUI();
-                gui.setVisible(true);
-			}
-		});
-		btnLocalHost.setBounds(30, 183, 117, 25);
-		contentPane.add(btnLocalHost);
+		
 		
 		JButton btnGoogle = new JButton("Google");
 		btnGoogle.addActionListener(new ActionListener() {

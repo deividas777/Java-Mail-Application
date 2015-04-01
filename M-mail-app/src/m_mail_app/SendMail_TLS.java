@@ -36,8 +36,10 @@ public class SendMail_TLS{
 	    properties.setProperty("socksProxyPort","9050");
 	}
 	
-	/*
+	/**
 	 * Manual sock's proxies, http proxies not working must use socks 4 or 5
+	 * @param host
+	 * @param port
 	 */
 	public static void m_proxy(String host, String port){		
 		properties.setProperty("proxySet","true");
@@ -52,8 +54,15 @@ public class SendMail_TLS{
 		properties.clear();		
 	}
 
-	/*
+	/**
 	 * ISP mail exchange settings and port 25
+	 * @param mailServer
+	 * @param from
+	 * @param to
+	 * @param subject
+	 * @param messageBody
+	 * @throws MessagingException
+	 * @throws AddressException
 	 */
 	
 	public static void sendMail_ISP2(String mailServer, String from, String to,String subject, String messageBody) throws MessagingException, AddressException {
@@ -91,8 +100,17 @@ public class SendMail_TLS{
 			Transport.send(message);		
 		}
 	
-	  /*
+	  /**
 	   * Send Mail Without Attachment
+	   * 
+	   * @param mailServer
+	   * @param from
+	   * @param to
+	   * @param subject
+	   * @param messageBody
+	   * @param attachFiles
+	   * @throws MessagingException
+	   * @throws AddressException
 	   */
 	
 	public static void sendMail_ISP(String mailServer, String from, String to,String subject, String messageBody,String attachFiles[]) throws MessagingException, AddressException {
@@ -148,6 +166,13 @@ public class SendMail_TLS{
 					
 		}
 		
+	/**
+	 * 
+	 * @param attachments
+	 * @param multipart
+	 * @throws MessagingException
+	 * @throws AddressException
+	 */
 		protected static void addAtachments(String[] attachments, Multipart multipart) throws MessagingException, AddressException {
 			
 			for(int i = 0; i<= attachments.length -1; i++){
@@ -168,7 +193,16 @@ public class SendMail_TLS{
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @param host
+	 * @param from
+	 * @param password
+	 * @param to
+	 * @param subject
+	 * @param text
+	 * @throws MessagingException
+	 */
        public static void sendMail_NoAttachement(String host,String from, String password, String to, String subject, String text) throws MessagingException{
 		
 		/*
@@ -205,7 +239,17 @@ public class SendMail_TLS{
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param host
+	 * @param from
+	 * @param password
+	 * @param to
+	 * @param subject
+	 * @param text
+	 * @param filename
+	 * @throws MessagingException
+	 */
 		
     public static void sendMail(String host,String from, String password, String to, String subject, String text, String filename) throws MessagingException{
 		
@@ -274,12 +318,19 @@ public class SendMail_TLS{
 	
     }//end sendMail
     
-    /*
+    
+    
+    /**
      * Check Connection of Proxy server, must enter ip address,
-     * port number and boolean value, cab be used to check internet connection on the LAN
+     * port number and boolean value, cab be used to check Internet connection on the LAN
+     * @param ip
+     * @param port
+     * @param reachable
+     * @return
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws ConnectException
      */
-    
-    
     
     public static boolean checkConnection(String ip, int port, boolean reachable) throws UnknownHostException, IOException, ConnectException{
 		
@@ -302,6 +353,14 @@ public class SendMail_TLS{
 		return reachable;
 	}
        
+    /**
+     * 
+     * @param args
+     * @throws MessagingException
+     * @throws UnknownHostException
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static void main(String[]args) throws MessagingException, UnknownHostException, IOException, InterruptedException{
         	    	
     	//SendMail_TLS mail = new SendMail_TLS();
