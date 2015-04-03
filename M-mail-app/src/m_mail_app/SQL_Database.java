@@ -12,6 +12,8 @@ import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -42,8 +44,6 @@ import java.util.regex.Pattern;
 import javax.swing.JCheckBox;
 
 import net.proteanit.sql.DbUtils;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 
 public class SQL_Database extends JFrame {
 
@@ -78,8 +78,6 @@ public class SQL_Database extends JFrame {
 	
 	public String userName1 = null;
 	public String password1 = null;
-	
-	public boolean db_connection = false;
 	
 	//@Variable used to update contact on DB
 		public String add1 = "";
@@ -154,18 +152,25 @@ public class SQL_Database extends JFrame {
 	public SQL_Database() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 564, 399);
+		setBounds(100, 100, 414, 399);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnNewMenu = new JMenu("About");
+		menuBar.add(mnNewMenu);
 		
 		final TextArea textArea = new TextArea();
 		textArea.setPreferredSize(new Dimension(300, 200));
 		textArea.setFont(new Font("DejaVu Sans Condensed", Font.BOLD | Font.ITALIC, 14));
 		textArea.setColumns(20);
 		textArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		textArea.setBounds(20, 22, 514, 222);
+		textArea.setBounds(20, 22, 372, 222);
 		contentPane.add(textArea);
 		
 		JLabel lblNewLabel = new JLabel("Search");
@@ -186,13 +191,22 @@ public class SQL_Database extends JFrame {
 				
 			//@Perform check on validation on userName1
 			
-		if(userName1 == null){		
+		if(FirstExample.check_connection == false){		
 			//@Display Login Form
 			    showLoginForm();
 				userName1 = userName.getText();
 				password1 = password_Field.getSelectedText();
-											
-				FirstExample.search( userName1, password1, search1);
+		}
+			
+		  //@Perform check 
+		FirstExample.dbConnector(userName1, password1);
+		
+		if(FirstExample.check_connection == true){
+			
+			//@Connect to DB and search
+				FirstExample.SQLConnector(userName1, password1);
+				FirstExample.search(search1);
+				
 				BufferedReader br = null;
 				
 			    try {
@@ -204,9 +218,11 @@ public class SQL_Database extends JFrame {
 						}
 						
 						br.close();
-						//@Print Output to textArea
-					    textArea.setText(result); 
 						
+					//@Print Output to textArea
+					    textArea.setText(result); 
+					    
+					//@Connect lo Sqlite DB if contact not found on server DB
 						if(result.length() <= 1){
 							JOptionPane.showMessageDialog(null, "Contact not Found in On Server Data Base.");
 							
@@ -227,76 +243,39 @@ public class SQL_Database extends JFrame {
 						}
 						
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-			    //@Print OUtput to textArea
-				    textArea.setText(result);
 			}//end (userName1 == null)
-		
-		else{
-			
-		        FirstExample.search(userName1, password1, search1);		
-		         
-		    try {
-				BufferedReader br = new BufferedReader(new FileReader("search.ser"));
-				String line;
-				
-				try {
-					while((line = br.readLine()) != null){						
-						result += line + "\n";						
-					}
-					
-					br.close();
-					//@Print Output to textArea
-				    textArea.setText(result); 
-					
-					if(result.length() <= 1){
-						JOptionPane.showMessageDialog(null, "Contact not Found in On Server Data Base.");
-						
-						Sqlite_Database.dbConnector();
-						Sqlite_Database.search(search1);
-						
-						File file = new File("sqlite_search.ser");
-						
-						if(file.length() > 1){
-							BufferedReader br2 = new BufferedReader(new FileReader(file));
-							String line2;
-							while((line2 = br2.readLine()) != null){
-                               result += line2 + "\n";
-							}
-							br2.close();
-							textArea.setText(result);								
-						}
-					}
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		    
-			    
-		  }//end else
 		}
 			
 		});
 		btnSearch.setBounds(17, 297, 117, 25);
 		contentPane.add(btnSearch);
 		
+		/**
+		 * @Create new Contact in DB on server and local DB
+		 */
+		
 		final JButton btnCreate = new JButton("Create");
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-			if(userName1 != null){	
+		
+		//@Perform check on connection to DB on server side
+		  // FirstExample.dbConnector(userName1, password1);
+		   
+		if(FirstExample.check_connection == false){				
+			 showLoginForm();
+			 userName1 = userName.getText().trim();
+			 password1 = password_Field.getSelectedText();
+		}
+			 //@Change state of boolean to true in FirstExample.dbConnector()
+			 
+			 FirstExample.dbConnector(userName1, password1);
+			 
+	  if(FirstExample.check_connection == true){
 				
 				showForm("Create User Form");
 			//@Variables
@@ -343,11 +322,6 @@ public class SQL_Database extends JFrame {
 					nic = sorted.get(5);
 					password = sorted.get(6);
 				
-				//@Check Strings in sorted list
-					for(String s: sorted){
-                      System.out.println(s);
-					}
-				
 				
 				int id = Integer.parseInt(userId);
 				int phone_number = Integer.parseInt(phone);
@@ -356,149 +330,57 @@ public class SQL_Database extends JFrame {
 				Matcher matcher = pattern.matcher(email);
 				
 					if(matcher.matches() == true){				
-						//@Create new contact	
-							FirstExample.insert(userName1, password1,id, user, surname, phone_number, address, nic, password, email);
-					//@Create new contact in Sqlite DB
+						//@Create new contact in DB on server side
+						    FirstExample.SQLConnector(userName1, password1);
+							FirstExample.insert(id, user, surname, phone_number, address, nic, password, email);
+					//@Create new contact in Sqlite DB 												
 							Sqlite_Database.dbConnector();
 							Sqlite_Database.insert(id, user, surname, phone_number, address, nic, password, email);
-					}else{
-						showMessageDialog("Wrong Email Address! Try Again ...");	
-						
-					}
-			 }else{
-				 
-				 showLoginForm();
-				 userName1 = userName.getText().trim();
-				 password1 = password_Field.getSelectedText();
-				 
-				 showForm("Create User Form");
-				//@Variables
-					String userId = user_Id.getText().replaceAll("\\W", "").trim();
-					String user = user_Name.getText().replaceAll("\\W", "").trim();
-					String surname = user_Surname.getText().replaceAll("\\W", "").trim();
-					String phone = user_Phone.getText().replaceAll("\\W", "").trim();						
-					String address = user_Address.getText().replaceAll("\\W", "").trim();
-					String nic = user_Nic.getText().replaceAll("\\W", "").trim();
-					String password = user_Password.getText();
-					String email = user_Email.getText().trim();
-						
-					//@Remove unwanted 	characters from Strings
-						List<String> list = new ArrayList<String>();
-						List<String> sorted = new ArrayList<String>();
-						list.add(userId);
-						list.add(user);
-						list.add(surname);
-						list.add(phone);
-						list.add(address);
-						list.add(nic);
-						list.add(password);
-						list.add(email);
-						
-					//@Remove elements	
-						 for(int i = 0; i < list.size();i++){
-							 
-							 StringTokenizer tokenizer = new StringTokenizer(list.get(i), "// //,//�//<//>//://;//!//()//?//)//#//=//{//}//(//)//[//]//|//\\//+//-//_//*//&//%//$//^//“//„//'//~//'//");								
-							 
-							 while(tokenizer.hasMoreElements()){								   								   
-								        String st = tokenizer.nextToken();
-								        st = Normalizer.normalize(st, Normalizer.Form.NFD);
-								        String result = st.replaceAll("[^\\x00-\\x7F]", "").replaceAll("[^\\p{ASCII}]", "");
-								        result.replaceAll("[^a-zA-Z0-9\\s]", "");
-								        sorted.add(result);
-							   }
-						 }
-						
-						userId = sorted.get(0);
-						user = sorted.get(1);
-						surname = sorted.get(2);
-						phone = sorted.get(3);
-						address = sorted.get(4);
-						nic = sorted.get(5);
-						password = sorted.get(6);
-					
-					//@Perform Check Strings in sorted list
-						for(String s: sorted){
-                             System.out.println(s);
-						}
-						
-						int id = Integer.parseInt(userId);
-						int phone_number = Integer.parseInt(phone);
-						
-						Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-						Matcher matcher = pattern.matcher(email);
-						
-							if(matcher.matches() == true){				
-								//@Create new contact in MySQL DB
-									FirstExample.insert(userName1, password1,id, user, surname, phone_number, address, nic, password, email);
-							   //@Create new contact in Sqlite DB
-									Sqlite_Database.dbConnector();
-									Sqlite_Database.insert(id, user, surname, phone_number, address, nic, password, email);
-							}else{
-								showMessageDialog("Wrong Email Address! Try Again ...");					
-							}
-			 }
-			
+					   }else{
+							showMessageDialog("Wrong Email Address! Try Again ...");	
+							
+						}//end if(matcher.matches() == true)
+				}//end if(FirstExample.check_connection == true)
 			}
 		});
-		btnCreate.setBounds(285, 263, 117, 25);
+		btnCreate.setBounds(146, 297, 117, 25);
 		contentPane.add(btnCreate);
+		
+		
 		
 		final JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-		if(userName1 != null){	
-			
-				Object[] fields = {"Name", user_Name};								
+		if(FirstExample.check_connection == false){				
+			showLoginForm();
+			userName1 = userName.getText().trim();
+			password1 = password_Field.getSelectedText();			
+		 }
 				
-				JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-				JOptionPane.showConfirmDialog(frame, fields, "Enter User Name", JOptionPane.OK_CANCEL_OPTION);
-				
-				String search = user_Name.getText().trim();
-			//@Delete user in MySQL 
-				FirstExample.delete(userName1, password1, search);	
-				
-				
-			//@Delete user in Sqlite DB	if connection establishe on server DB
-				
+		//@Perform check on connection status in DB on server side if success check_connection change state to  = true
 			FirstExample.dbConnector(userName1, password1);
 			
 			if(FirstExample.check_connection == true){
-				Sqlite_Database.dbConnector();
-				Sqlite_Database.delete(search);
-			}
 				
-				search = null;
-				user_Name.setText("");
-				
-			}else{
-				
-				showLoginForm();
-				userName1 = userName.getText().trim();
-				password1 = password_Field.getSelectedText();
-				
-                Object[] fields = {"Name", user_Name};								
-				
+				Object[] fields = {"Name", user_Name};												
 				JFrame frame = new JFrame("JOptionPane showMessageDialog example");
 				JOptionPane.showConfirmDialog(frame, fields, "Enter User Name", JOptionPane.OK_CANCEL_OPTION);
 				
+			//@Search contact
 				String search = user_Name.getText().trim();
-			
+				
 			//@Delete user in MySQL 
-				FirstExample.delete(userName1, password1, search);	
-	
-			//@Delete user in Sqlite DB	if connection establishe on server DB
+				FirstExample.SQLConnector(userName1, password1);
+				FirstExample.delete(search);
 				
-				FirstExample.dbConnector(userName1, password1);
-				
-				if(FirstExample.check_connection == true){
-					Sqlite_Database.dbConnector();
-					Sqlite_Database.delete(search);
-				}
-				
+			//@Delete user in Sqlite
+				Sqlite_Database.dbConnector();
+				Sqlite_Database.delete(search);
+			//@Clear	
 				search = null;
 				user_Name.setText("");
-			}
+			}				
 		}
 		});
 		btnDelete.setBounds(285, 297, 117, 25);
@@ -513,7 +395,8 @@ public class SQL_Database extends JFrame {
 				if(chckbxUpdate.isSelected()){
 					
 					//@Perform check if username not null
-					if(userName1 == null){
+					
+					if(FirstExample.check_connection == false){
 							showLoginForm();
 							userName1 = userName.getText();
 							password1 = password_Field.getSelectedText();
@@ -527,8 +410,6 @@ public class SQL_Database extends JFrame {
 						
 						if(connection != null){
 							
-							//@Change state of db_connection
-							db_connection = true;
 							//@Set New JFrame
 		    		    	JFrame frame = new JFrame();
 		  	    		    final JTable table = new JTable();
@@ -621,11 +502,14 @@ public class SQL_Database extends JFrame {
 		    			int userPhone = Integer.parseInt(user_Phone.getText());
 		    				
 		    			//@Execute SQL update method	
-		    				FirstExample.update(userName1, password1, userId, user_Name.getText(), user_Surname.getText(), userPhone, user_Address.getText(), user_Nic.getText(), user_Password.getText(), user_Email.getText(), table_click);
+		    			    FirstExample.SQLConnector(userName1, password1);
+		    				FirstExample.update(userId, user_Name.getText(), user_Surname.getText(), userPhone, user_Address.getText(), user_Nic.getText(), user_Password.getText(), user_Email.getText(), table_click);
 		    			
 		    				
 		    		 //@Execute Sqlite update method only if SQL Database on server can be updated
+		    				
 		    			FirstExample.dbConnector(userName1, password1);
+		    			
 		    			if(FirstExample.check_connection == true){
 		    				Sqlite_Database.dbConnector();
 		    				Sqlite_Database.update(userId, user_Name.getText(), user_Surname.getText(), userPhone, user_Address.getText(), user_Nic.getText(), user_Password.getText(), user_Email.getText(), table_click);
@@ -642,7 +526,6 @@ public class SQL_Database extends JFrame {
 		    			            		   try {
 												connection2.close();
 											} catch (SQLException e1) {
-												// TODO Auto-generated catch block
 												JOptionPane.showMessageDialog(null, e1);
 											}
 		    			            	 }
@@ -656,14 +539,13 @@ public class SQL_Database extends JFrame {
 						}//end if(connection != null)
 						
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "Connection to server can not be established try again later");
 					}
 				}
 			  
 			}
 		});
-		chckbxUpdate.setBounds(405, 264, 129, 23);
+		chckbxUpdate.setBounds(160, 264, 91, 23);
 		contentPane.add(chckbxUpdate);
 	}
 }

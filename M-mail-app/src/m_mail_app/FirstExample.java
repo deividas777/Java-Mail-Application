@@ -48,7 +48,7 @@ public class FirstExample {
 		   
 		 //update("root", "", "Sexy Beast","SEXY BITCH", "232334", "sexy@gmail.com","Kaunas Rokakiemio 10","trish");
 		 //insert("root", "", "Johnas", "Jamies", "9283723", "Waterford Cork Rd 300", "jamie@gmail.com");
-		 insert("root", "",2, "Johnas", "Jamies", 86023232, "Waterford Cork Rd 300", "john888", "password","jamie@gmail.com");
+		 //insert("root", "",2, "Johnas", "Jamies", 86023232, "Waterford Cork Rd 300", "john888", "password","jamie@gmail.com");
 		
 	   }
 	 
@@ -67,11 +67,10 @@ public class FirstExample {
 				
 				Class.forName(JDBC_DRIVER);
 				connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
-				//JOptionPane.showMessageDialog(null, "Connection Successfull ... Connected To Local DataBase  ");
 				return connection;
 				
 			}catch(Exception e){
-				JOptionPane.showMessageDialog(null, e);
+				JOptionPane.showMessageDialog(null, "Can not establish connection to database!");
 				return null;
 			}finally{
 				try{
@@ -84,12 +83,30 @@ public class FirstExample {
 					}
 				}
 			}
-			
-		
+	 
 	 /**
 	  * 
 	  * @param DB_USER
 	  * @param DB_PASS
+	  * @return
+	  */
+	 
+	 final static Connection SQLConnector(String DB_USER, String DB_PASS){
+		 
+		 try{			 
+			    Class.forName(JDBC_DRIVER);
+				connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+				return connection;
+				
+		 }catch(Exception e){
+			 e.getMessage();
+			 return null;
+		 } 
+	 }
+			
+		
+	 /**
+	  * 
 	  * @param userID
 	  * @param userName
 	  * @param userSurname
@@ -101,19 +118,13 @@ public class FirstExample {
 	  * @param userId
 	  */
 	 
-	 public static void update(String DB_USER, String DB_PASS,int userID, String userName, String userSurname, int userPhone, String userAddress, String userNic, String userPassword, String userEmail, String userId){
+	 public static void update(int userID, String userName, String userSurname, int userPhone, String userAddress, String userNic, String userPassword, String userEmail, String userId){
 		   
 		 //Connection connection = null;
 		 PreparedStatement statement = null;
 		 
 		 try{
-			 
-			//STEP 2: Register JDBC driver
-		      Class.forName(JDBC_DRIVER);
-		      
-			   //@Get a Connection To Database
-			     connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
-			
+			 			
 			   //@Execute SQL Query		   
 			     final String sql = "UPDATE contacts SET ID=?, Name=?, Surname=?, Phone=?, Address=?, User=?, Password=?, Email=? WHERE Name=?";
 			     
@@ -139,12 +150,7 @@ public class FirstExample {
 			   
 		   }catch(SQLException se){
 			   se.getNextException();
-		   } catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		   
-		 finally{
+		   } finally{
 			   //finally block used to close resources
 			      try{
 			         if(statement!=null){
@@ -165,22 +171,14 @@ public class FirstExample {
 	   
    /**
     * 
-    * @param user
-    * @param pass
     * @param delete_user
-    * 
-    * @Methid Deletes user from database
     */
 	 
-   public static void delete(String user, String pass, String delete_user){
+   public static void delete(String delete_user){
 	   
-	   Connection connection = null;
 	   PreparedStatement statement = null;
 	   try {
-		 //STEP 2: Register JDBC driver
-		      Class.forName(JDBC_DRIVER);
-		      
-		        connection = DriverManager.getConnection(DB_URL,user,pass);
+	
 		        final String sql = "DELETE FROM contacts WHERE Name=?";
 		        
 		        statement = connection.prepareStatement(sql);
@@ -194,10 +192,7 @@ public class FirstExample {
 		} catch (SQLException e) {
 			showMessageDialog("Access denied for user 'root'@'localhost'");
 			        e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
+		} finally{
 			//finally block used to close resources
 		      try{
 		         if(statement!=null){
@@ -216,32 +211,23 @@ public class FirstExample {
 		}
    }
    
-   /**
-    * 
-    * @param user
-    * @param pass
-    * @param userID
-    * @param userName
-    * @param userSurname
-    * @param userPhone
-    * @param userAddress
-    * @param userNic
-    * @param userPassword
-    * @param userEmail
-    * 
-    * @Method creates new record in DB
-    */
+  /**
+   * 
+   * @param userID
+   * @param userName
+   * @param userSurname
+   * @param userPhone
+   * @param userAddress
+   * @param userNic
+   * @param userPassword
+   * @param userEmail
+   */
 
-   public static void insert(String user, String pass, long userID, String userName, String userSurname, long userPhone, String userAddress, String userNic, String userPassword,  String userEmail){
+   public static void insert(int userID, String userName, String userSurname, int userPhone, String userAddress, String userNic, String userPassword,  String userEmail){
 	  
-	   Connection connection = null;
 	   Statement statement = null;
 	   
 	   try{
-		    //STEP 2: Register JDBC driver
-		      Class.forName(JDBC_DRIVER);
-		   //Get a Connection To Database
-		     connection = DriverManager.getConnection(DB_URL,user,pass);
 		   
 		   //Create a Statement		   
 		     statement = connection.createStatement();
@@ -256,13 +242,8 @@ public class FirstExample {
 			   //connection.close();
 		   
 	   }catch(SQLException se){
-		   se.getNextException();
-	   } catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	   
-	   finally{
+		   JOptionPane.showMessageDialog(null, "Can not establish connection to database!");
+	   }finally{
 		   //finally block used to close resources
 		      try{
 		         if(statement!=null){
@@ -275,40 +256,24 @@ public class FirstExample {
 		            connection.close();
 		         }
 		      }catch(SQLException se){
-		         se.printStackTrace();
+		    	  JOptionPane.showMessageDialog(null, "Can not establish connection to database!");
 		      }//end finally try
 	   }
    }
    
    /**
     * 
-    * @param url
-    * @param user
-    * @param pass
     * @param search
-    * 
-    * @Method searches for record in DB 
     */
-   public static void search(String user, String pass, String search) {
+   public static void search(String search) {
    
-	   Connection conn = null;
        Statement stmt = null;
    
    try{
-      //@Register JDBC driver
-      Class.forName(JDBC_DRIVER);
-
-      //@Open a connection
-      
-      System.out.println("Connecting to database...");
-      
-     //@conn = DriverManager.getConnection(DB_URL,USER,PASS);
-      
-      conn = DriverManager.getConnection(DB_URL,user,pass);
-     
+   
       //@Execute a query
 		      System.out.println("Creating statement...");
-		      stmt = conn.createStatement();
+		      stmt = connection.createStatement();
 		      final String sql = "SELECT Name, Surname, Phone, Address, Email FROM contacts";
 		      ResultSet rs = stmt.executeQuery(sql);
 
@@ -349,7 +314,7 @@ public class FirstExample {
 	    	      
 	   }catch(SQLException se){
 	       //se.printStackTrace();
-		   showMessageDialog("Access denied for user: " + user);
+		   showMessageDialog("Access denied");
 		   
 	   }catch(Exception e){
 	      //Handle errors for Class.forName
@@ -363,8 +328,8 @@ public class FirstExample {
 	      }catch(SQLException se2){
 	      }// nothing we can do
 	      try{
-	         if(conn!=null)
-	            conn.close();
+	         if(connection!=null)
+	            connection.close();
 	      }catch(SQLException se){
 	         se.printStackTrace();
 	      }//end finally try

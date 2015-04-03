@@ -92,7 +92,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	@SuppressWarnings({ "static-access", "static-access" })
+	
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 573, 282);
@@ -109,28 +109,11 @@ public class MainFrame extends JFrame {
 				System.exit(0);
 			}
 		});
+		
 		mnNewMenu.add(mntmExit);
 		
 		JMenu mnNewMenu_1 = new JMenu("Properties");
 		menuBar.add(mnNewMenu_1);
-		
-		
-		
-		
-		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Edit List");
-		mntmNewMenuItem_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-				Edit edit = new Edit();
-				edit.setVisible(true);
-			}
-		});
-		
-		
-		
-		
-		mnNewMenu_1.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_2 = new JMenu("About");
 		menuBar.add(mnNewMenu_2);
@@ -147,7 +130,8 @@ public class MainFrame extends JFrame {
 				str += "To find local host server use nslookup tool and \nset q=mx and your ISP providers address \neg. eircom.net, vodafone.ie\n";
 				str += "And then enter the mail exchange server\n";
 				str += "Added Encryption Option, RSA, Bitshifter and SHA-1 generation function!";
-				textAbout.setText(str);
+				JOptionPane.showMessageDialog(null, str);
+				
 			}
 		});
 		mnNewMenu_2.add(mntmNewMenuItem);
@@ -162,10 +146,7 @@ public class MainFrame extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(textAbout);
 		scrollPane.setBounds(208, 11, 325, 197);
 		contentPane.add(scrollPane);
-		
-			
-		
-		
+				
 		JButton btnGoogle = new JButton("Send Mail");
 		btnGoogle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -183,18 +164,14 @@ public class MainFrame extends JFrame {
 				Mail_Retrieval mail_rt = new Mail_Retrieval();
 				String userName = "";
 				
+			//@Email Form	
 				showUserEmailForm();
-				
-				
-				//showUserEmailForm();
 				userName = textField1.getText().trim();
-				
-				System.out.println("User name:" + userName);
-				
+
+			//@Perform validation on email pattern
 				Pattern pattern = Pattern.compile(mail_rt.EMAIL_PATTERN);
 				Matcher matcher = pattern.matcher(userName);
 				
-				System.out.println(matcher);
 				
 				if(matcher.matches() == true){
 					
@@ -206,7 +183,7 @@ public class MainFrame extends JFrame {
 						textField1.setText("");
 						return;
 						
-					}else  {	
+					}else{	
 						
 							BufferedReader bfr = null;
 							try {
@@ -225,17 +202,15 @@ public class MainFrame extends JFrame {
 								}
 								bfr.close();
 								
+								//@Display output to textArea
+								textAbout.setText(messages);
+								textField1.setText("");
+								
 							} catch (IOException e1) {
 								
 								e1.printStackTrace();
-							}
-							//@Display output to textArea
-							textAbout.setText(messages);
-							textField1.setText("");
-							
-							
-						
-					}
+							}						
+					}//end else
 					
 				}else{
 				//@Show message if email adress not found or file do not exist
@@ -269,9 +244,11 @@ public class MainFrame extends JFrame {
 				String password = password_Field.getSelectedText();
 				String search = textField1.getText();
 				
-			//@Call Search Method in FirstExample class ==> search result will be written into a file (search.ser)					
-				FirstExample.search( user, password, search);
+			//@Call Search Method in FirstExample class ==> search result will be written into a file (search.ser)	
+				FirstExample.SQLConnector(user,password);
+				FirstExample.search(search);
 				BufferedReader br = null;
+				
 			    try {
 					 br = new BufferedReader(new FileReader("search.ser"));
 					 String line;
@@ -279,11 +256,32 @@ public class MainFrame extends JFrame {
 						while((line = br.readLine()) != null){
 							result += line + "\n";
 						}
+						
+						//@Print OUtput to textArea
+					    textAbout.setText(result);
 						//@Close buffered reader
 						br.close();
 						
+						BufferedReader br2 = null;
+						
 						if(result.length() <= 1){
 							JOptionPane.showMessageDialog(null, "Contact not found in database.");
+							
+							Sqlite_Database.dbConnector();
+							Sqlite_Database.search(search);
+							
+							File file2 = new File("sqlite_search.ser");
+							
+							if(file2.length() > 1){
+								
+								br2 = new BufferedReader(new FileReader(file2));
+								String line2;
+								while((line2 = br2.readLine()) != null){
+	                               result += line2 + "\n";
+								}
+								br2.close();
+								textAbout.setText(result);								
+							}
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -294,8 +292,7 @@ public class MainFrame extends JFrame {
 					e.printStackTrace();
 				}
 
-			    //@Print OUtput to textArea
-				    textAbout.setText(result);
+			    
 			}		
 		});
 		
