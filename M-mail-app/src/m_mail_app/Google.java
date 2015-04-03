@@ -1360,28 +1360,20 @@ public class Google extends JFrame{
 	    		
 	    		if(chckbxSelect.isSelected()){
 	    		
-		    		if(db_connection == false){
+		    		if(FirstExample.check_connection == false){
 		    			showLoginForm();
 		    			user = user_Name.getText();
 		    			password = password_Field.getSelectedText();	
 	     			}
-	    				    		    
-	    		    Connection conn = null;    		    
-	    		    
-	    		    try{
-	    		    	 try {
-	    		    		 
-							Class.forName(FirstExample.JDBC_DRIVER);
-							
-						} catch (ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}	    		    	
-    		         //@Connect TO server DB
-	    		         conn = DriverManager.getConnection(FirstExample.DB_URL,user,password);
-	    		         
-	    		   //@Check Connection Status on Server if connection can be established proceed further 
-	    		      if(conn != null){    	
+	    		//@Check connection	to DB on server side
+		    		FirstExample.dbConnector(user, password);
+		    		
+		    //@Connect to DB on server	
+		    	if(FirstExample.check_connection == true){
+		    		
+		    	   try{
+		    		
+	    		    FirstExample.SQLConnector(user, password);  	
 	    		    	  
 	    		    	  //@Set New JFrame
 		    		    	JFrame frame = new JFrame();
@@ -1394,7 +1386,7 @@ public class Google extends JFrame{
 		  	    		    
 	    		    	  //@Prepare statement
 		    			     String query = "SELECT Name, Email FROM contacts";
-		    			     PreparedStatement  pst =  conn.prepareStatement(query);
+		    			     PreparedStatement  pst =  FirstExample.connection.prepareStatement(query);
 		    			 
 		    			   //@Execute query
 		    			     ResultSet rs = pst.executeQuery();
@@ -1402,12 +1394,14 @@ public class Google extends JFrame{
 		    			   //@Pass Results into JTable
 		    			     table.setModel(DbUtils.resultSetToTableModel(rs));
 		    			     
+		    			   //@Close calls  
+		    			     pst.close();
+		    			     rs.close();
+		    			     
 		    			    //@change state of check box
 		    			    
 		    			     chckbxSelect.setSelected(false);
 		    			     
-		    			   //@Attach new value to db_connection after successful login to DB
-		    			     db_connection = true;
 		    			
                            /**
                             * @Mouse click listener attached to table
@@ -1430,6 +1424,7 @@ public class Google extends JFrame{
 		    			               //@Set selected value to field ==> TO
 		    			            	   textField_1.setText(table_click);
 		    			            	   
+		    			            	   
 		    			               }catch(Exception exc){
 		    			            	   JOptionPane.showMessageDialog(null, exc);
 		    			               
@@ -1438,31 +1433,32 @@ public class Google extends JFrame{
 		    			            
 		    			           }
 		    			         });	    	
+		    			      }catch(Exception e1){
+		    			    	  e1.getMessage();
+		    			      }finally{
+		    			    	  try{
+		    			    		 //@Close Connection
+		    			    		  if(FirstExample.connection != null){
+		    			    			  FirstExample.connection.close();
+		    			    			  
+		    			    		  }
+		    			    	  
+		    			    	  }catch(SQLException se){
+                                       se.getMessage();
+		    			    	  }
+
 		    			      }
 	    		      
-	    		    }catch(SQLException se){
-	    			      //@Handle errors for JDBC
-	    				   showMessageDialog("Access denied or server not running press OK to connect to Local Data Base");
-	    			   }finally{
-	    				   try{
-	    					   //@Close connection
-	    					   if(conn != null){
-	    						   conn.close();
-	    					   }
-	    				   }catch(Exception e1){
-	    					   JOptionPane.showMessageDialog(null, e1);
-	    				   }
-	    			   }
-	    		  //@If connection is refused on server side connect to local DB  
-	    		    
-	    		    if(conn == null){
+		    	}else{
+	    			   
+	    		  //@If connection is refused on server side connect to local DB  	    		    
 	    		    	
 	    		     try{
 	    		    	 
 	    		    //@Connect to Sqlite DB on Local Machine
 	    		    	Sqlite_Database.dbConnector();
 	    		    	
-	    		    //@Set New JFrame
+	    		    	//@Set New JFrame
 	    		    	JFrame frame = new JFrame();
 	  	    		    final JTable table = new JTable();
 
@@ -1471,57 +1467,44 @@ public class Google extends JFrame{
 	  	    		    frame.setSize(400, 250);
 	  	    		    frame.setVisible(true);
 	  	    		    
-	  	    		//@Prepare statement
-	    			     String query = "SELECT Name, Email FROM ContactInfo";
+    		    	  //@Prepare statement
+	    			     final String query = "SELECT Name, Email FROM ContactInfo";
 	    			     PreparedStatement  pst =  Sqlite_Database.connection.prepareStatement(query);
-	    			     
+	    			 
 	    			   //@Execute query
 	    			     ResultSet rs = pst.executeQuery();
 	    			 
 	    			   //@Pass Results into JTable
 	    			     table.setModel(DbUtils.resultSetToTableModel(rs));
-	    			     
-	    			    //@change state of check box
-	    			     
-	    			     chckbxSelect.setSelected(false);
-	    			     
-	    			   //@Close Statements
+	    			   //@Close calls  
 	    			     pst.close();
 	    			     rs.close();
 	    			     
+	    			    //@change state of check box	    			    
+	    			      chckbxSelect.setSelected(false);
+	    			      
 	    			     /**
                           * @Mouse click listener attached to table
-                          */
-		    			     
+                          */		    			     
 		    			     table.addMouseListener(new MouseAdapter() {
 		    			    	 
-		    			         public void mouseClicked(MouseEvent e) {
-		    			        	 
-		    			             if (e.getButton() == MouseEvent.NOBUTTON) {
-		    			            	 
-		    			               textArea.setText("No button clicked...");
-		    			               
-		    			             } else if (e.getButton() == MouseEvent.BUTTON1) {
-		    			               		    			               
+		    			         public void mouseClicked(MouseEvent e) {		    			        	 
+		    			             if (e.getButton() == MouseEvent.NOBUTTON) {		    			            	 
+		    			               textArea.setText("No button clicked...");		    			               
+		    			             } else if (e.getButton() == MouseEvent.BUTTON1) {		    			               		    			               
 		    			               try{		
 		    			            	//@Get email address from table
 		    			            	   int row = table.getSelectedRow();
 		    			            	   String table_click = (table.getModel().getValueAt(row, 1).toString());
 		    			               //@Set selected value to field ==> TO
-		    			            	   textField_1.setText(table_click);
-		    			            	   
+		    			            	   textField_1.setText(table_click);		    			            	   
 		    			               }catch(Exception exc){
 		    			            	   JOptionPane.showMessageDialog(null, exc);
-		    			               }
-		    			              		    			               
+		    			               }		    			              		    			               
 		    			             } 
 		    			           }
 		    			         });	    
-		    			     
-		    			   //@Set value to db_connection true
-		    			     db_connection = true;
-
-	    			    		 
+		    			   
 	    		     }catch(Exception e1){
 	    		    	 JOptionPane.showMessageDialog(null, e1);
 	    		     }finally{
@@ -1535,7 +1518,7 @@ public class Google extends JFrame{
 	    		    	}catch(Exception e2){
 	    		    		JOptionPane.showMessageDialog(null, e2);
 	    		    	}
-	    		     }
+	    		     }//end finally
 	    		    }
 	    		}
 	    	}

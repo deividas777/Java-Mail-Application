@@ -22,6 +22,7 @@ public class FirstExample {
 	
    // JDBC driver name and database URL
    static Connection connection  = null;
+   
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:mysql://localhost/phplogin";
 
@@ -61,7 +62,7 @@ public class FirstExample {
 	  * @Method performs connection validation function
 	  */
 	 
-	 public static Connection dbConnector(String DB_USER, String DB_PASS){
+	 final static Connection dbConnector(String DB_USER, String DB_PASS){
 			
 			try{
 				
@@ -91,7 +92,7 @@ public class FirstExample {
 	  * @return
 	  */
 	 
-	 final static Connection SQLConnector(String DB_USER, String DB_PASS){
+	 final static Connection SQLConnector(String DB_USER,  String DB_PASS){
 		 
 		 try{			 
 			    Class.forName(JDBC_DRIVER);

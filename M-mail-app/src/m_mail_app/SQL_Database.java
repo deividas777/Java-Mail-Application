@@ -152,7 +152,7 @@ public class SQL_Database extends JFrame {
 	public SQL_Database() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 414, 399);
+		setBounds(100, 100, 426, 399);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -170,7 +170,7 @@ public class SQL_Database extends JFrame {
 		textArea.setFont(new Font("DejaVu Sans Condensed", Font.BOLD | Font.ITALIC, 14));
 		textArea.setColumns(20);
 		textArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		textArea.setBounds(20, 22, 372, 222);
+		textArea.setBounds(20, 22, 384, 222);
 		contentPane.add(textArea);
 		
 		JLabel lblNewLabel = new JLabel("Search");
@@ -195,7 +195,7 @@ public class SQL_Database extends JFrame {
 			//@Display Login Form
 			    showLoginForm();
 				userName1 = userName.getText();
-				password1 = password_Field.getSelectedText();
+				password1 = password_Field.getSelectedText();				
 		}
 			
 		  //@Perform check 
@@ -288,7 +288,7 @@ public class SQL_Database extends JFrame {
 				String password = user_Password.getText();
 				String email = user_Email.getText().trim();
 				
-				//@Remove unwanted 	characters from Strings
+			//@Remove unwanted 	characters from Strings
 				List<String> list = new ArrayList<String>();
 				List<String> sorted = new ArrayList<String>();
 				list.add(userId);
@@ -321,8 +321,7 @@ public class SQL_Database extends JFrame {
 					address = sorted.get(4);
 					nic = sorted.get(5);
 					password = sorted.get(6);
-				
-				
+								
 				int id = Integer.parseInt(userId);
 				int phone_number = Integer.parseInt(phone);
 				
@@ -346,7 +345,9 @@ public class SQL_Database extends JFrame {
 		btnCreate.setBounds(146, 297, 117, 25);
 		contentPane.add(btnCreate);
 		
-		
+		/**
+		 * @Delete USER From DB
+		 */
 		
 		final JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
