@@ -41,10 +41,6 @@ import javax.swing.border.EmptyBorder;
 
 public class Mail_Retrieval extends JFrame {
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	//@ New Object of EmailAttachmentReceiver
@@ -594,7 +590,7 @@ public class Mail_Retrieval extends JFrame {
 								    	    			System.out.println("Directory will be deleted: " + st + "TMP");
 							    	    				    File file_st = new File(st+"TMP");
 							    	    				    if(file.exists()){
-											        	       Utility.deleteDirectory(file_st);
+											        	       Settings.deleteDirectory(file_st);
 											        	       System.out.println("Deleting Directory: " + file_st.toString());
 							    	    				    }  	    	
 							    	    				//@Exit Loop    
@@ -608,7 +604,7 @@ public class Mail_Retrieval extends JFrame {
 								    	    		
 							    	    			File file_st = new File(st+"TMP");
 					    	    				    if(file.exists()){
-									        	       Utility.deleteDirectory(file_st);
+									        	       Settings.deleteDirectory(file_st);
 					    	    				    }  	    	
 							    	    		}//end else if(b == (fileExtensions.size() - 1))
 							    	    }//end for(int b = 0; b < fileExtensions.size();b++)
@@ -780,7 +776,7 @@ public class Mail_Retrieval extends JFrame {
 															        	  */
 											    	    				    File file_st = new File(st+"TMP");
 											    	    				    if(file.exists()){
-															        	       Utility.deleteDirectory(file_st);
+															        	       Settings.deleteDirectory(file_st);
 											    	    				    }
 											    	    				  //@ out of loop
 											    	    				    break;
@@ -792,7 +788,7 @@ public class Mail_Retrieval extends JFrame {
 									    	    				//@Delete Directory
 											    	    			File file_st = new File(st+"TMP");
 									    	    				    if(file.exists()){
-													        	       Utility.deleteDirectory(file_st);
+													        	       Settings.deleteDirectory(file_st);
 									    	    				    }  	    	
 											    	    		  }//end else if(g == (fileExt.size() - 1))
 										    	    			}//end if(newFileName.contains(check))

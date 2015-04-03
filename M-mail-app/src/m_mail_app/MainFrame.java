@@ -1,7 +1,6 @@
 package m_mail_app;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -24,19 +23,21 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JScrollPane;
-import javax.swing.JCheckBoxMenuItem;
+
 import java.awt.Font;
 import javax.swing.JSeparator;
 
 
 public class MainFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3311578534357379033L;
 	private JPanel contentPane;
 	private JTextArea textAbout;
 	private JTextField textField1 = new JTextField();
@@ -159,9 +160,7 @@ public class MainFrame extends JFrame {
 		JButton btnShowMessages = new JButton("Read Mail");
 		btnShowMessages.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				Mail_Retrieval mail_rt = new Mail_Retrieval();
+			
 				String userName = "";
 				
 			//@Email Form	
@@ -169,7 +168,7 @@ public class MainFrame extends JFrame {
 				userName = textField1.getText().trim();
 
 			//@Perform validation on email pattern
-				Pattern pattern = Pattern.compile(mail_rt.EMAIL_PATTERN);
+				Pattern pattern = Pattern.compile(Mail_Retrieval.EMAIL_PATTERN);
 				Matcher matcher = pattern.matcher(userName);
 				
 				

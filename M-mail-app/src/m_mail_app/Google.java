@@ -1,6 +1,5 @@
 package m_mail_app;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,8 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-
 import javax.swing.JLabel;
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,12 +25,9 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -50,8 +44,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -63,6 +55,10 @@ import net.proteanit.sql.DbUtils;
 
 public class Google extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8084288538034142016L;
 	private JPanel contentPane;
 	private static JTextField textField;
 	private static JTextField textField_1;
@@ -734,7 +730,7 @@ public class Google extends JFrame{
 						        	  * it will deletes ==> (TMP) directory, that was located inside location
 						        	  * of the attached file
 						        	  */
-						        	 Utility.deleteDirectory(new File(filePath+"TMP"));
+						        	 Settings.deleteDirectory(new File(filePath+"TMP"));
 						        	
 						        	 Thread.sleep(6000);
 						        	 

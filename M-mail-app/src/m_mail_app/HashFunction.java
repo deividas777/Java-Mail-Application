@@ -2,7 +2,6 @@ package m_mail_app;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.*;
 
@@ -36,6 +35,9 @@ public class HashFunction {
 		while((bytesRead = fis.read(byteBuffer)) != -1){
 			md.update(byteBuffer, 0, bytesRead);
 		}
+		
+		//@Close
+		fis.close();
 		
 		byte[] hashedBytes = md.digest();
 		return convertByteArrayToHexString(hashedBytes);

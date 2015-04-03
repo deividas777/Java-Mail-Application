@@ -56,6 +56,23 @@ public class Settings {
 
 	}//end
 	
+	 public static boolean deleteDirectory(File path) {
+	   
+		if( path.exists() ) {
+	      File[] files = path.listFiles();
+	      for(int i=0; i<files.length; i++) {
+	    	  
+	         if(files[i].isDirectory()) {
+	           deleteDirectory(files[i]);
+	         }
+	         else {
+	           files[i].delete();
+	         }
+	      }
+	    }
+	    return( path.delete() );
+	  }
+	
      public static void Image_to_binary(String inputFile, String outputFile){
 		
 		File input = new File(inputFile);

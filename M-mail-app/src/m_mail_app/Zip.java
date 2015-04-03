@@ -17,7 +17,12 @@ public class Zip {
 		//unZipIt("/root/Attachments/TMP.zip", "/root/Attachments/");
     }
 	
-	
+	/**
+	 * 
+	 * @param srcFolder
+	 * @param destZipFile
+	 * @throws Exception
+	 */
 	static public void zipFolder(String srcFolder, String destZipFile) throws Exception {
 	    ZipOutputStream zip = null;
 	    FileOutputStream fileWriter = null;
@@ -32,10 +37,16 @@ public class Zip {
 	    
 	  }
 	
-	
-	static private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip)
-		      throws Exception {
-		    File folder = new File(srcFolder);
+	/**
+	 * 
+	 * @param path
+	 * @param srcFolder
+	 * @param zip
+	 * @throws Exception
+	 */
+	static private void addFolderToZip(String path, String srcFolder, ZipOutputStream zip)throws Exception {
+		    
+		  File folder = new File(srcFolder);
 
 		    for (String fileName : folder.list()) {
 		      if (path.equals("")) {
@@ -46,8 +57,15 @@ public class Zip {
 		    }
 		  }
 	
-	static private void addFileToZip(String path, String srcFile, ZipOutputStream zip)
-		      throws Exception {
+	/**
+	 * 
+	 * @param path
+	 * @param srcFile
+	 * @param zip
+	 * @throws Exception
+	 */
+	
+	static private void addFileToZip(String path, String srcFile, ZipOutputStream zip)throws Exception {
 
 		    File folder = new File(srcFile);
 		    if (folder.isDirectory()) {
@@ -63,7 +81,12 @@ public class Zip {
 		      in.close();
 		    }
 		  }
-	
+	/**
+	 * 
+	 * @param fileToZip
+	 * @param file_output
+	 * @param zip_entry
+	 */
 	
     public static void ZipFile(String fileToZip, String file_output, String zip_entry){
     	
@@ -95,9 +118,7 @@ public class Zip {
     	}
     	
   }
-    
-
-    
+        
     /**
      * Unzip it
      * @param zipFile input zip file

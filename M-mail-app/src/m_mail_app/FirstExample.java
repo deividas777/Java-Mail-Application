@@ -3,13 +3,10 @@ package m_mail_app;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.StringWriter;
 import java.sql.*;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import org.json.simple.JSONObject;
 
 
 
