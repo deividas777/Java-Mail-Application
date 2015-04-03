@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import javax.swing.JOptionPane;
+
 public class Bitshifter {
 	
 	public static String encrypt;
@@ -63,6 +65,7 @@ public class Bitshifter {
 		ck = Bitshifter.buildChain(5);
 					
 		String dec = Bitshifter.decrypt(decrypt,ck);
+		JOptionPane.showMessageDialog(null, "Decrypted:" + NCR2UnicodeString(dec));
 		System.out.println("Decrypted:" + NCR2UnicodeString(dec));
 	
 	}//end

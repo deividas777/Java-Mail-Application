@@ -10,23 +10,66 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBoxMenuItem;
+import java.awt.Font;
+import javax.swing.JSeparator;
 
 
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextArea textAbout;
-	private JTextField textSearch;
+	private JTextField textField1 = new JTextField();
+	
+	
+	/**
+	 * @Fields used to get user and password details
+	 */
+	
+	private JPasswordField password_Field = new JPasswordField();
+	private JTextField userName = new JTextField();
+	
+	/**
+	 * @Mehods
+	 */
+	
+    public void showUserEmailForm(){
+		
+		Object[] field = {"Email", textField1};		
+		JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+		JOptionPane.showConfirmDialog(frame, field, "Email Address", JOptionPane.OK_CANCEL_OPTION);
+	}
+    
+   public void showSearchForm(){
+		
+		//@multiple fields
+			Object[] fields = {"User", userName,
+					           "Password", password_Field,
+					           "Search", textField1
+					           };		
+			JFrame login = new JFrame("JOptionPane showMessageDialog example");
+			JOptionPane.showConfirmDialog(login, fields, "Login Form", JOptionPane.OK_CANCEL_OPTION);
+		}
 
 	/**
 	 * Launch the application.
@@ -49,9 +92,10 @@ public class MainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "static-access", "static-access" })
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 447, 329);
+		setBounds(100, 100, 573, 282);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -112,10 +156,17 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		textAbout = new JTextArea(11, 5);
+		textAbout.setFont(new Font("Courier New", Font.BOLD, 14));
+		textAbout.setEditable(false);
+		JScrollPane scrollPane = new JScrollPane(textAbout);
+		scrollPane.setBounds(208, 11, 325, 197);
+		contentPane.add(scrollPane);
+		
 			
 		
 		
-		JButton btnGoogle = new JButton("Google");
+		JButton btnGoogle = new JButton("Send Mail");
 		btnGoogle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -123,87 +174,160 @@ public class MainFrame extends JFrame {
                 google.setVisible(true);
 			}
 		});
-		btnGoogle.setBounds(30, 147, 117, 25);
-		contentPane.add(btnGoogle);
 		
-		textAbout = new JTextArea(11, 5);
-		textAbout.setEditable(false);
-		JScrollPane scrollPane = new JScrollPane(textAbout);
-		scrollPane.setBounds(161, 11, 263, 197);
-		contentPane.add(scrollPane);
-		
-		JButton btnShowNames = new JButton("Show Names");
-		btnShowNames.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Utility util = new Utility();
-				util.loadNames();
-				textAbout.setText(util.listNames());
-				util = null;
-			}
-		});
-		btnShowNames.setBounds(30, 13, 117, 23);
-		contentPane.add(btnShowNames);
-		
-		JButton btnShowEmails = new JButton("Show Emails");
-		btnShowEmails.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Utility util = new Utility();
-				util.loadEmails();
-				textAbout.setText(util.listEmails());
-				util = null;
-			}
-		});
-		btnShowEmails.setBounds(30, 47, 117, 23);
-		contentPane.add(btnShowEmails);
-		
-		JButton btnShowPasswords = new JButton("Show Passwords");
-		btnShowPasswords.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Utility util = new Utility();
-				util.loadPasswords();
-				textAbout.setText(util.listPasswords());
-				util = null;
-			}
-		});
-		btnShowPasswords.setBounds(30, 79, 117, 23);
-		contentPane.add(btnShowPasswords);
-		
-		JButton btnShowMessages = new JButton("Show Messages");
+		JButton btnShowMessages = new JButton("Read Mail");
 		btnShowMessages.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Utility util = new Utility();
-				util.loadMessages();
-				textAbout.setText(util.listMessages());
-				util = null;
-			}
+				
+				
+				Mail_Retrieval mail_rt = new Mail_Retrieval();
+				String userName = "";
+				
+				showUserEmailForm();
+				
+				
+				//showUserEmailForm();
+				userName = textField1.getText().trim();
+				
+				System.out.println("User name:" + userName);
+				
+				Pattern pattern = Pattern.compile(mail_rt.EMAIL_PATTERN);
+				Matcher matcher = pattern.matcher(userName);
+				
+				System.out.println(matcher);
+				
+				if(matcher.matches() == true){
+					
+					File file = new File(userName + "_MESSAGES.ser");
+					
+				if(!file.exists()){
+					//@Show Message
+						JOptionPane.showMessageDialog(null,"Can not display messages, first retrieve messages!");
+						textField1.setText("");
+						return;
+						
+					}else  {	
+						
+							BufferedReader bfr = null;
+							try {
+								
+								bfr = new BufferedReader(new FileReader(userName + "_MESSAGES.ser"));
+								
+							} catch (FileNotFoundException e2) {									
+								JOptionPane.showMessageDialog(null,"No Messages Found!");
+							}
+							String line;
+							String messages = "";
+							
+							try {
+								while((line = bfr.readLine()) != null){
+									messages += line + "\n";
+								}
+								bfr.close();
+								
+							} catch (IOException e1) {
+								
+								e1.printStackTrace();
+							}
+							//@Display output to textArea
+							textAbout.setText(messages);
+							textField1.setText("");
+							
+							
+						
+					}
+					
+				}else{
+				//@Show message if email adress not found or file do not exist
+					JOptionPane.showMessageDialog(null,"Check Email address!");
+					textField1.setText("");
+				}
+			}				
+				
 		});
-		btnShowMessages.setBounds(30, 113, 117, 23);
+		btnShowMessages.setBounds(30, 12, 153, 23);
 		contentPane.add(btnShowMessages);
+		btnGoogle.setBounds(30, 47, 153, 25);
+		contentPane.add(btnGoogle);
 		
-		JButton btnSearch = new JButton("Search");
+		JButton btnSearch = new JButton("Search Contact");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(textSearch.getText().length() > 0){
-				Utility util = new Utility();
-				String str = "Names List:\n";
-				str += util.search(util.names, textSearch.getText());
-				str += "\nPasswords List:\n";
-				str += util.search(util.passwords, textSearch.getText());
-				str += "\nEmails List:\n";
-				str += util.search(util.emails, textSearch.getText());
-				str += "\nMessages List:\n";
-				str += util.search(util.messages, textSearch.getText());			
-				textAbout.setText(str);
+								
+							
+				String result = "";
 				
+			//@Delete file with old search result
+				File file = new File("search.ser");
+				if(file.exists()){
+					file.delete();
 				}
+			
+			//@Display Search Form
+			    showSearchForm();
+				String user= userName.getText();
+				String password = password_Field.getSelectedText();
+				String search = textField1.getText();
+				
+			//@Call Search Method in FirstExample class ==> search result will be written into a file (search.ser)					
+				FirstExample.search( user, password, search);
+				BufferedReader br = null;
+			    try {
+					 br = new BufferedReader(new FileReader("search.ser"));
+					 String line;
+					try {
+						while((line = br.readLine()) != null){
+							result += line + "\n";
+						}
+						//@Close buffered reader
+						br.close();
+						
+						if(result.length() <= 1){
+							JOptionPane.showMessageDialog(null, "Contact not found in database.");
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			    //@Print OUtput to textArea
+				    textAbout.setText(result);
+			}		
+		});
+		
+		
+		
+		final JButton btnRetrieveMail = new JButton("Retrieve Mail");
+		btnRetrieveMail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {				
+				dispose();
+                Mail_Retrieval mail = new Mail_Retrieval();
+                mail.setVisible(true);
 			}
 		});
-		btnSearch.setBounds(30, 237, 117, 23);
+		btnRetrieveMail.setBounds(30, 84, 153, 25);
+		contentPane.add(btnRetrieveMail);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(30, 121, 153, 2);
+		contentPane.add(separator);
+		
+		btnSearch.setBounds(30, 135, 153, 23);
 		contentPane.add(btnSearch);
 		
-		textSearch = new JTextField();
-		textSearch.setBounds(161, 238, 117, 20);
-		contentPane.add(textSearch);
-		textSearch.setColumns(10);
+		final JButton btnNewButton = new JButton("Contacts");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				dispose();
+				SQL_Database sql = new SQL_Database();
+				sql.setVisible(true);				
+			}
+		});
+		btnNewButton.setBounds(30, 170, 153, 25);
+		contentPane.add(btnNewButton);
 	}
 }

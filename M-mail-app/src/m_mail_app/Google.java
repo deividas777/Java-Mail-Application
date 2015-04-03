@@ -324,7 +324,6 @@ public class Google extends JFrame{
 		proxy.setFont(new Font("DejaVu Sans", Font.BOLD, 14));
 		proxy.setToolTipText("Enter IP Address and Port Number First");
 		proxy.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(proxy.isSelected()){
@@ -830,7 +829,7 @@ public class Google extends JFrame{
 		symmetric.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 							
-				Bitshifter shifter = new Bitshifter();				
+								
 				String encrypted;
 				int key_length = Integer.parseInt(textField_7.getText());
 				/*
@@ -849,7 +848,7 @@ public class Google extends JFrame{
 				 * Call buildChain method ==> Bitshifter.class
 				 * pass argument length of the chain into it ==> number
 				 */
-				    chain = shifter.buildChain(key_length);
+				    chain = Bitshifter.buildChain(key_length);
 						
 				/*
 				 * Validation of key length, get text from text Area, if matches parameters execute method	
@@ -858,7 +857,8 @@ public class Google extends JFrame{
 					/*
 					 * Call shifter method from Bitshifter class
 					 */ 
-					encrypted = shifter.encrypt(textArea.getText(), chain);
+					encrypted = Bitshifter.encrypt(textArea.getText(), chain);
+					Bitshifter.NCR2UnicodeString(encrypted);
 					textArea.setText(encrypted);	
 					
 				}else{ 
@@ -866,7 +866,7 @@ public class Google extends JFrame{
 					 * if checkbox unselected call decryption function
 					 */					
 						encrypted = textArea.getText();
-						String decrypt = shifter.decrypt(encrypted, chain);
+						String decrypt = Bitshifter.decrypt(encrypted, chain);
 						textArea.setText(decrypt);
 				}//end if statement 			
 			}
@@ -1046,7 +1046,7 @@ public class Google extends JFrame{
 				if(fileName != null){
 					
 					HashFunction hash = new HashFunction();
-					Bitshifter bitsh = new Bitshifter();
+					
 					
 					/*
 					 * Create password to encrypt file, iterate through hash function 
@@ -1076,8 +1076,8 @@ public class Google extends JFrame{
 					/*
 					 * Encrypt password that was used to encrypt file
 					 */
-					int [] chain = bitsh.buildChain((password.length()/2));
-					password = bitsh.encrypt(password, chain);
+					int [] chain = Bitshifter.buildChain((password.length()/2));
+					password = Bitshifter.encrypt(password, chain);
 					System.out.println("Password after Encrypting: " + password);
 					
 				  //Check filename and filePath

@@ -20,6 +20,7 @@ import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeBodyPart;
+import javax.swing.JOptionPane;
  
 /**
  * This program demonstrates how to download e-mail messages and save
@@ -70,6 +71,7 @@ public class EmailAttachmentReceiver {
     * 
     * Manual sock's proxies, http proxies not working must use socks 4 or 5
     */
+    
 	public static void m_proxy(String host, String port){		
 		
 		properties.setProperty("proxySet","true");
@@ -99,6 +101,7 @@ public class EmailAttachmentReceiver {
      * @param userName
      * @param password
      */
+    
     public static void downloadEmailAttachments(String host, String userName, String password) {
         
         //@Server setting
@@ -125,7 +128,7 @@ public class EmailAttachmentReceiver {
             // fetches new messages from server
             Message[] arrayMessages = folderInbox.getMessages();
             
-          //@Write message content into a file ==> (MESSAGES.ser)
+          //@Write message content into a file ==> (userName + MESSAGES.ser)
 	           
              File file_messages = new File(userName + "_MESSAGES.ser");
 	           
@@ -166,6 +169,7 @@ public class EmailAttachmentReceiver {
                             
                         	// this part is attachment
                             String fileName = part.getFileName();
+                            
                             //(st) variable used to rename files if files with a same names exists
                             String st = "";
                             
@@ -209,7 +213,8 @@ public class EmailAttachmentReceiver {
                 System.out.println("\t Message: " + messageContent.replaceAll("\\W", " ").substring(0,(messageContent.length()/5)));
                 System.out.println("\t Attachments: " + attachFiles);
                 
-            //@Write into file    
+            //@Write into file  ==> userName + MESSAGES.ser
+                
                 bfr.write("\tMessage #" + (i + 1) + ":");
                 bfr.newLine();
                 bfr.write("\t From: " + from);
@@ -235,12 +240,13 @@ public class EmailAttachmentReceiver {
             
             
         } catch (NoSuchProviderException ex) {
-            System.out.println("No provider for pop3.");
+        	JOptionPane.showMessageDialog(null, "No provider for pop3");
             ex.printStackTrace();
         } catch (MessagingException ex) {
-            System.out.println("Could not connect to the message store");
+        	JOptionPane.showMessageDialog(null, "Could not connect to the message store");
             ex.printStackTrace();
         } catch (IOException ex) {
+        	JOptionPane.showMessageDialog(null, "Can not connect to " + userName);
             ex.printStackTrace();
         }
     }
@@ -251,8 +257,8 @@ public class EmailAttachmentReceiver {
     public static void main(String[] args) {
        
         String host = "pop.zoho.com";
-        String userName = "@zoho.com";
-        String password = "";
+        String userName = "deividas777@zoho.com";
+        String password = "menuliukas";
  
         //create directory if does not exists
         File file = new File("/root/Attachment");

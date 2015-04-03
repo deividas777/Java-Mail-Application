@@ -79,6 +79,7 @@ public class SendMail_TLS{
 		
 		// Define a new mail message
 			Message message = new MimeMessage(session); 
+			message.setHeader("Content-Type", "text/plain; charset=UTF-8");
 			message.setFrom(new InternetAddress(from));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
@@ -126,6 +127,7 @@ public class SendMail_TLS{
 		
 		// Define a new mail message
 			Message message = new MimeMessage(session); 
+			message.setHeader("Content-Type", "text/plain; charset=UTF-8");
 			message.setFrom(new InternetAddress(from));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
@@ -225,10 +227,11 @@ public class SendMail_TLS{
 		 * Create a default MimeMessage object.	
 		 */
 			MimeMessage message = new MimeMessage(session);
+			message.setHeader("Content-Type", "text/plain; charset=UTF-8");
 			message.setFrom(new InternetAddress(from));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
-			message.setText(text);
+			message.setContent(text, "Unicode/ 8.0");
 		/*
 		 * Send message
 		 */
@@ -271,6 +274,7 @@ public class SendMail_TLS{
 		 * Create a default MimeMessage object.	
 		 */
 			  MimeMessage message = new MimeMessage(session);
+			  message.setHeader("Content-Type", "text/plain; charset=UTF-8");
 			  
 			// Set From: header field of the header.
 			  message.setFrom(new InternetAddress(from));
@@ -285,7 +289,8 @@ public class SendMail_TLS{
 		       BodyPart messageBodyPart = new MimeBodyPart();
 		       
 		   // Now set the actual message
-		       messageBodyPart.setText(text);
+		       messageBodyPart.setContent( text, "text/html; charset=utf-8" );
+		       //messageBodyPart.setText(text);
 		       
 		    // Create a multi part message
 		       Multipart multipart = new MimeMultipart();
@@ -368,9 +373,13 @@ public class SendMail_TLS{
 		//SendMail_TLS.checkConnection("202.112.31.203",1080,reachable);
     	//m_proxy("115.29.251.179", "1080");
     	//mail.proxy();
-    	sendMail("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test File Output", "Test File Output","PROXY.ser");
-    	sendMail_NoAttachement("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test WEB Proxy", "Test WEB Proxy 94.208.211.99");
+    	int [] ch = Bitshifter.buildChain(10);
+    	String message = Bitshifter.encrypt("Hello My Friend How Are you today!", ch);
+    	//message = Bitshifter.NCR2UnicodeString(message);
+    	
+    	//sendMail("smtp.zoho.com", "deividas777@zoho.com", "menuliukas", "deividas777@zoho.com", "Test File Output", message, "PROXY.ser");
+    	sendMail_NoAttachement("smtp.zoho.com", "deividas777@zoho.com", "menuliukas", "deividas777@zoho.com", "Test UTF-8", message);
     	//clearProperties();
-    	sendMail("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test MESSAGE OUT PUT FILE", "Test MESSAGE OUTPUT FILE","deividas777@zoho.com_MESSAGES.ser");
+    	//sendMail("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test MESSAGE OUT PUT FILE", "Test MESSAGE OUTPUT FILE","deividas777@zoho.com_MESSAGES.ser");
     }
 }

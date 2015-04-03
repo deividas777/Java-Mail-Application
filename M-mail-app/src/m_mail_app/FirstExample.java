@@ -67,7 +67,7 @@ public class FirstExample {
 				
 				Class.forName(JDBC_DRIVER);
 				connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
-				JOptionPane.showMessageDialog(null, "Connection Successfull ... Connected To Local DataBase  ");
+				//JOptionPane.showMessageDialog(null, "Connection Successfull ... Connected To Local DataBase  ");
 				return connection;
 				
 			}catch(Exception e){
@@ -295,82 +295,40 @@ public class FirstExample {
        Statement stmt = null;
    
    try{
-      //STEP 2: Register JDBC driver
+      //@Register JDBC driver
       Class.forName(JDBC_DRIVER);
 
-      //STEP 3: Open a connection
+      //@Open a connection
       
       System.out.println("Connecting to database...");
       
-     // conn = DriverManager.getConnection(DB_URL,USER,PASS);
+     //@conn = DriverManager.getConnection(DB_URL,USER,PASS);
       
       conn = DriverManager.getConnection(DB_URL,user,pass);
      
-      //STEP 4: Execute a query
+      //@Execute a query
 		      System.out.println("Creating statement...");
 		      stmt = conn.createStatement();
 		      final String sql = "SELECT Name, Surname, Phone, Address, Email FROM contacts";
 		      ResultSet rs = stmt.executeQuery(sql);
 
-      //STEP 5: Extract data from result set and write into a file
-		   
-		      
+      //@Extract data from result set and write into a file
+		   		      
 		      File file = new File("search.ser");
 	            if(!file.exists()){
 	            	file.createNewFile();
 	            }	            
 	           
 	         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-	         
-	       //@Contain two copies of contacts in json format for future functionality   
-	         
-	         FileWriter fw = new FileWriter("contacts.json");
-	         FileWriter fw1 = new FileWriter("tmp.json");
-	         
-	     //@Compare Files if different update ==> (contacts.json)    
-	       boolean hash = HashFunction.compareFileHashes(new File("contacts.json"), new File("tmp.json"));
-	         
-	       //@JSON 
-	         JSONObject obj = new JSONObject();
 	            
       while(rs.next()){
-         //Retrieve by column name
+         //@Retrieve by column name
 	         name  = rs.getString("Name");
 	         surname = rs.getString("Surname");
 	         number = rs.getInt("Phone");
 	         address = rs.getString("Address");
 	         email = rs.getString("Email");
-	         
-    	if(hash == false){
-    		
-	    	 obj.put("Name", name);
-	         obj.put("Surname", surname);
-	         obj.put("Phone", number);
-	         obj.put("Address", address);
-	         obj.put("Email", email);
-	         
-	         StringWriter out = new StringWriter();
-	         obj.writeJSONString(out);
-	         String jsonText = out.toString();
-	         System.out.println(jsonText);
-	         fw.write(obj.toJSONString());
-	         System.out.println("Writing to: contacts.json");
-	          	
-    	}else{
-    		 obj.put("Name", name);
-	         obj.put("Surname", surname);
-	         obj.put("Phone", number);
-	         obj.put("Address", address);
-	         obj.put("Email", email);
-	         
-	         StringWriter out = new StringWriter();
-	         obj.writeJSONString(out);
-	         String jsonText = out.toString();
-	         System.out.println(jsonText);
-	         fw1.write(obj.toJSONString());
-	         System.out.println("Writing to: tmp.json");
-    	}
-	    
+	         	    
          //@Convert integer to String
             String phone_number = Integer.toString(number); 
             
@@ -383,22 +341,16 @@ public class FirstExample {
      //@Close BufferedReader 
 	      bw.flush();
 	      bw.close();
-	 //@Close File writers     
-	      fw.flush();
-	      fw.close();
-	      
-	      fw1.flush();
-	      fw1.close();
-	      
-             
-      //STEP 6: Clean-up environment
+	 
+	                   
+      //@Clean-up environment
 	      rs.close();
 	      stmt.close();
-	      
+	    	      
 	   }catch(SQLException se){
-	      //Handle errors for JDBC
 	       //se.printStackTrace();
-		   showMessageDialog("Access denied for user 'root'@'localhost'");
+		   showMessageDialog("Access denied for user: " + user);
+		   
 	   }catch(Exception e){
 	      //Handle errors for Class.forName
 	      e.printStackTrace();

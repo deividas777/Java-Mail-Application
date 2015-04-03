@@ -77,8 +77,8 @@ public class CheckingMails {
 
       String host = "pop.mail.yahoo.com";// change accordingly
       String mailStoreType = "pop3";
-      String username = "olivialesbian@yahoo.com";// change accordingly
-      String password = "menuliukas123";// change accordingly
+      String username = "@yahoo.com";// change accordingly
+      String password = "";// change accordingly
 
       CheckingMails test = new CheckingMails();
       test.check(host, mailStoreType, username, password);

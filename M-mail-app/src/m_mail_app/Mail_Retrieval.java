@@ -70,7 +70,7 @@ public class Mail_Retrieval extends JFrame {
 	
 	public String messages;
 	/*
-	 * IP Address pattern and Email Patterns
+	 * IP Address pattern 
 	 */
 	private static final String IPADDRESS_PATTERN = 
 			"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
@@ -78,7 +78,7 @@ public class Mail_Retrieval extends JFrame {
 			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
 			"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 	
-	private static final String EMAIL_PATTERN = 
+	public static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
@@ -193,7 +193,7 @@ public class Mail_Retrieval extends JFrame {
 	 */
 	public Mail_Retrieval() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 652, 452);
+		setBounds(100, 100, 652, 373);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -217,7 +217,7 @@ public class Mail_Retrieval extends JFrame {
 				
 				//@Get Values from JTextFields
 					userName = textField1.getText().trim();
-					password = passwordField2.getSelectedText().trim();
+					password = passwordField2.getText().trim();
 					
 					//@check email address pattern
 					Pattern pattern = Pattern.compile(EMAIL_PATTERN);

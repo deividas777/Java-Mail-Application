@@ -1,5 +1,7 @@
 package m_mail_app;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.sql.*;
 
 import javax.swing.*;
@@ -17,11 +19,13 @@ public class Sqlite_Database {
 		//update("Gabriele", "Onaityte", "232334", "gabi@gmail.com", "Tramore", "Otilija");
 		
 	//@Build Data  Base
-		String [] st = {"adam", "tom", "ben", "dominic", "laura", "criss", "jamie", "gabi", "dave", "richard"};
-		for(int i = 0; i < st.length; i++){
-			dbConnector();
-		   insert(i , st[i], "fff", 35300 + i, "dddd", "wdddd", "ddd", st[i] + "@sdeer.com");
-		}
+		//String [] st = {"adam", "tom", "ben", "dominic", "laura", "criss", "jamie", "gabi", "dave", "richard"};
+		//for(int i = 0; i < st.length; i++){
+			//dbConnector();
+		   //insert(i , st[i], "fff", 35300 + i, "dddd", "wdddd", "ddd", st[i] + "@sdeer.com");
+		//}
+		//dbConnector();
+		//search("fff");
 		
 	}
 	
@@ -38,6 +42,61 @@ public class Sqlite_Database {
 			JOptionPane.showMessageDialog(null, e);
 			return null;
 		}
+	}
+	
+	public static void search(String search){
+		
+		PreparedStatement statement = null;
+		FileWriter file = null;
+		
+		try{
+			
+			final String sql = "SELECT Name, Surname, Phone, Address, User, Email From ContactInfo";
+			statement = connection.prepareStatement(sql);
+			ResultSet rs = statement.executeQuery();
+		
+		//@Write search result into a file ==> "sqlite_searc.ser"
+			
+			 file = new FileWriter("sqlite_search.ser");
+			
+			while(rs.next()){
+				String name = rs.getString("Name");
+				String surname = rs.getString("Surname");
+				String phone = rs.getString("Phone");
+				String address = rs.getString("Address");
+				String user = rs.getString("User");
+				String email = rs.getString("Email");
+				
+				if(name.equals(search) || surname.equals(search) || phone.equals(search) || address.equals(search) || user.equals(search) || email.equals(search)){
+
+					file.write("\nName: " + name + "\nSurname: " + surname + "\nPhone: " + phone + "\nAddress: " + address + "\nUser: " + user + "\nEmail: " + email + "\n\n");
+				}
+			}//end 
+			//@Close file writer
+			 file.close();
+			 
+			 //@Check file size
+			 File file2 = new File("sqlite_search.ser");
+			 
+		  if(file2.length() < 1){
+				 JOptionPane.showMessageDialog(null, "Contact not Found!");
+			 }
+			
+		}catch(Exception e){
+			e.getMessage();
+		}finally{
+			try{
+				if(connection != null){
+					statement.close();
+					connection.close();
+				}
+				
+			}catch(SQLException e){				
+				e.getMessage();
+			}
+
+		}
+
 	}
 	
 	

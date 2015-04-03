@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -41,6 +42,8 @@ import java.util.regex.Pattern;
 import javax.swing.JCheckBox;
 
 import net.proteanit.sql.DbUtils;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class SQL_Database extends JFrame {
 
@@ -149,6 +152,7 @@ public class SQL_Database extends JFrame {
 	 * Create the frame.
 	 */
 	public SQL_Database() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 564, 399);
 		contentPane = new JPanel();
@@ -189,14 +193,39 @@ public class SQL_Database extends JFrame {
 				password1 = password_Field.getSelectedText();
 											
 				FirstExample.search( userName1, password1, search1);
+				BufferedReader br = null;
 				
 			    try {
-					BufferedReader br = new BufferedReader(new FileReader("search.ser"));
+					br = new BufferedReader(new FileReader("search.ser"));
 					String line;
 					try {
 						while((line = br.readLine()) != null){
 							result += line + "\n";
 						}
+						
+						br.close();
+						//@Print Output to textArea
+					    textArea.setText(result); 
+						
+						if(result.length() <= 1){
+							JOptionPane.showMessageDialog(null, "Contact not Found in On Server Data Base.");
+							
+							Sqlite_Database.dbConnector();
+							Sqlite_Database.search(search1);
+							
+							File file = new File("sqlite_search.ser");
+							
+							if(file.length() > 1){
+								BufferedReader br2 = new BufferedReader(new FileReader(file));
+								String line2;
+								while((line2 = br2.readLine()) != null){
+                                   result += line2 + "\n";
+								}
+								br2.close();
+								textArea.setText(result);								
+							}
+						}
+						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -222,6 +251,30 @@ public class SQL_Database extends JFrame {
 					while((line = br.readLine()) != null){						
 						result += line + "\n";						
 					}
+					
+					br.close();
+					//@Print Output to textArea
+				    textArea.setText(result); 
+					
+					if(result.length() <= 1){
+						JOptionPane.showMessageDialog(null, "Contact not Found in On Server Data Base.");
+						
+						Sqlite_Database.dbConnector();
+						Sqlite_Database.search(search1);
+						
+						File file = new File("sqlite_search.ser");
+						
+						if(file.length() > 1){
+							BufferedReader br2 = new BufferedReader(new FileReader(file));
+							String line2;
+							while((line2 = br2.readLine()) != null){
+                               result += line2 + "\n";
+							}
+							br2.close();
+							textArea.setText(result);								
+						}
+					}
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -230,21 +283,14 @@ public class SQL_Database extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		    //@Print Output to textArea
-			    textArea.setText(result); 
+		    
 			    
 		  }//end else
 		}
 			
 		});
-		btnSearch.setBounds(156, 263, 117, 25);
+		btnSearch.setBounds(17, 297, 117, 25);
 		contentPane.add(btnSearch);
-		
-		
-		
-		JLabel lblUpdate = new JLabel("Update");
-		lblUpdate.setBounds(20, 297, 70, 15);
-		contentPane.add(lblUpdate);
 		
 		final JButton btnCreate = new JButton("Create");
 		btnCreate.addActionListener(new ActionListener() {
@@ -411,9 +457,16 @@ public class SQL_Database extends JFrame {
 				String search = user_Name.getText().trim();
 			//@Delete user in MySQL 
 				FirstExample.delete(userName1, password1, search);	
-			//@Delete user in Sqlite DB	
+				
+				
+			//@Delete user in Sqlite DB	if connection establishe on server DB
+				
+			FirstExample.dbConnector(userName1, password1);
+			
+			if(FirstExample.check_connection == true){
 				Sqlite_Database.dbConnector();
 				Sqlite_Database.delete(search);
+			}
 				
 				search = null;
 				user_Name.setText("");
@@ -433,16 +486,22 @@ public class SQL_Database extends JFrame {
 			
 			//@Delete user in MySQL 
 				FirstExample.delete(userName1, password1, search);	
-			//@Delete user in Sqlite DB	
-				Sqlite_Database.dbConnector();
-				Sqlite_Database.delete(search);
+	
+			//@Delete user in Sqlite DB	if connection establishe on server DB
+				
+				FirstExample.dbConnector(userName1, password1);
+				
+				if(FirstExample.check_connection == true){
+					Sqlite_Database.dbConnector();
+					Sqlite_Database.delete(search);
+				}
 				
 				search = null;
 				user_Name.setText("");
 			}
 		}
 		});
-		btnDelete.setBounds(285, 321, 117, 25);
+		btnDelete.setBounds(285, 297, 117, 25);
 		contentPane.add(btnDelete);
 		
 		
@@ -564,10 +623,15 @@ public class SQL_Database extends JFrame {
 		    			//@Execute SQL update method	
 		    				FirstExample.update(userName1, password1, userId, user_Name.getText(), user_Surname.getText(), userPhone, user_Address.getText(), user_Nic.getText(), user_Password.getText(), user_Email.getText(), table_click);
 		    			
-		    		   //@Execute Sqlite update method only if SQL Database on server can be updated
+		    				
+		    		 //@Execute Sqlite update method only if SQL Database on server can be updated
+		    			FirstExample.dbConnector(userName1, password1);
+		    			if(FirstExample.check_connection == true){
 		    				Sqlite_Database.dbConnector();
 		    				Sqlite_Database.update(userId, user_Name.getText(), user_Surname.getText(), userPhone, user_Address.getText(), user_Nic.getText(), user_Password.getText(), user_Email.getText(), table_click);
-		    		   
+		    			}
+		    			
+		    			
 		    		  //@Change state of chckbxUpdate
 		    				chckbxUpdate.setSelected(false);
 		    			            	   
