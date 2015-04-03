@@ -13,6 +13,7 @@ import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -205,7 +206,7 @@ public class SendMail_TLS{
 	 * @param text
 	 * @throws MessagingException
 	 */
-       public static void sendMail_NoAttachement(String host,String from, String password, String to, String subject, String text) throws MessagingException{
+       public static void sendMail_NoAttachement(String host,final String from, final String password, String to, String subject, String text) throws MessagingException{
 		
 		/*
 		 * Get System Properties, Setup mail server
@@ -221,7 +222,12 @@ public class SendMail_TLS{
 		/*
 		 * Get the default Session object.
 		 */
-			Session session = Session.getDefaultInstance(properties);
+			Session session = Session.getDefaultInstance(properties,
+			         new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	               return new PasswordAuthentication(from, password);
+	            }
+	         });
 			session.setDebug(true);
 		/*
 		 * Create a default MimeMessage object.	
@@ -254,7 +260,7 @@ public class SendMail_TLS{
 	 * @throws MessagingException
 	 */
 		
-    public static void sendMail(String host,String from, String password, String to, String subject, String text, String filename) throws MessagingException{
+    public static void sendMail(String host,final String from, final String password, String to, String subject, String text, String filename) throws MessagingException{
 		
 		/*
 		 * Get System Properties, Setup mail server
@@ -266,9 +272,14 @@ public class SendMail_TLS{
 			properties.put("mail.smtp.port", "587");
 			properties.put("mail.smtp.auth", "true");	
 		/*
-		 * Get the default Session object.
+		 * Get the default Session object, Authenticate user 
 		 */
-			Session session = Session.getDefaultInstance(properties);
+			Session session = Session.getDefaultInstance(properties,
+			         new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	               return new PasswordAuthentication(from, password);
+	            }
+	         });
 			session.setDebug(true);
 		/*
 		 * Create a default MimeMessage object.	

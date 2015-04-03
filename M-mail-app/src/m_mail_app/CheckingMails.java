@@ -34,7 +34,7 @@ public class CheckingMails {
                return new PasswordAuthentication(user, password);
             }
          });
-      // emailSession.setDebug(true);
+       emailSession.setDebug(true);
 
       // create the POP3 store object and connect with the pop server
       Store store = emailSession.getStore("pop3s");

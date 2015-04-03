@@ -14,9 +14,11 @@ public class Bitshifter {
 	public static String encrypt;
 	public static String decrypt;
 	
+	/*
 	private final int[] chain = {
 		1234, 2314, 4354, 333, 2109, 90876, 765, 564, 8970, 9987, 3245, 1, 3, 2, 4, 7, 12, 43, 78, 98
 	};
+	*/
 	
 	public static void main(String[] args) throws IOException, InterruptedException{
 		

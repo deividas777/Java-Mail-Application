@@ -17,6 +17,7 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Part;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.MimeBodyPart;
@@ -102,7 +103,7 @@ public class EmailAttachmentReceiver {
      * @param password
      */
     
-    public static void downloadEmailAttachments(String host, String userName, String password) {
+    public static void downloadEmailAttachments(String host, final String userName, final String password) {
         
         //@Server setting
         properties.put("mail.pop3.host", host);
@@ -114,7 +115,14 @@ public class EmailAttachmentReceiver {
         properties.setProperty("mail.pop3.socketFactory.port",
                 String.valueOf("995"));
  
-        Session session = Session.getDefaultInstance(properties);
+        
+        //@New lines after (properties, Authentication 
+        Session session = Session.getDefaultInstance(properties,
+         new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+               return new PasswordAuthentication(userName, password);
+            }
+         });
  
         try {
             // connects to the message store
@@ -257,8 +265,8 @@ public class EmailAttachmentReceiver {
     public static void main(String[] args) {
        
         String host = "pop.zoho.com";
-        String userName = "deividas777@zoho.com";
-        String password = "menuliukas";
+        String userName = "@zoho.com";
+        String password = "";
  
         //create directory if does not exists
         File file = new File("/root/Attachment");

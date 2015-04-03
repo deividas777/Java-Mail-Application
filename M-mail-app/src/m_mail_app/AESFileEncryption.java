@@ -1,14 +1,10 @@
 package m_mail_app;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
@@ -28,13 +24,14 @@ public class AESFileEncryption {
 
 		String password = "geltona_zalia_raudona.mp3";
 		HashFunction hashF = new HashFunction();
-		Bitshifter bit = new Bitshifter();
+		//Bitshifter bit = new Bitshifter();
 		//password = hashF.generateHash(password);
 		
 		/*
 		 * Number of Iterations depends on file name length
 		 */
-		BufferedReader bf = new BufferedReader(new FileReader("/root/Attachment/TMP/iv.enc"));
+		BufferedReader bf = null;
+		bf = new BufferedReader(new FileReader("/root/Attachment/TMP/iv.enc"));
 		String line;
 		int tmp = 0;
 		while((line = bf.readLine()) != null){
@@ -47,6 +44,8 @@ public class AESFileEncryption {
 			System.out.println("BYTE: " + test[u] + " Value: " + tmp);
 			}			
 		}
+		//@Close BufferedReader
+		bf.close();
 		
 		if(tmp <= 0){
 			tmp = ((tmp) * (-2));
@@ -62,8 +61,8 @@ public class AESFileEncryption {
 		
 		System.out.println( "Password Length ==> " + (password.length() ^ 2)/ 12);
 		
-		int[] chain = bit.buildChain(password.length()/2);
-		password = bit.encrypt(password, chain).toString();
+		int[] chain = Bitshifter.buildChain(password.length()/2);
+		password = Bitshifter.encrypt(password, chain).toString();
 		System.out.println("New Password: " + password);
 		
 				
@@ -105,14 +104,14 @@ public class AESFileEncryption {
 		
 		
 		
-		int[] chain2 = bit.buildChain(password.length()/2);
-		password = bit.encrypt(password, chain2).toString();
+		int[] chain2 = Bitshifter.buildChain(password.length()/2);
+		password = Bitshifter.encrypt(password, chain2).toString();
 		System.out.println("Decryption Password: " + password);
        
        
 		
-		AESFileDecryption filedec = new AESFileDecryption();
-		filedec.fileDecryption("/root/Desktop/mp3/TMP/geltona_zalia_raudona.mp3_encrypted.des", "/root/Desktop/mp3/decrypted.mp", password, "/root/Desktop/mp3/TMP/salt.enc", "/root/Desktop/mp3/TMP/iv.enc");
+		//AESFileDecryption filedec = new AESFileDecryption();
+		AESFileDecryption.fileDecryption("/root/Desktop/mp3/TMP/geltona_zalia_raudona.mp3_encrypted.des", "/root/Desktop/mp3/decrypted.mp", password, "/root/Desktop/mp3/TMP/salt.enc", "/root/Desktop/mp3/TMP/iv.enc");
 		
 
 		/*
