@@ -3,6 +3,7 @@ package m_mail_app;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.Serializable;
 import java.sql.*;
 
 import javax.swing.JFrame;
@@ -10,8 +11,13 @@ import javax.swing.JOptionPane;
 
 
 
-public class FirstExample {
+public class FirstExample implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/*
 	 * @Global Variables
 	 */
@@ -24,8 +30,8 @@ public class FirstExample {
    static final String DB_URL = "jdbc:mysql://localhost/phplogin";
 
    //  Database credentials
-   static final String USER = "root";
-   static final String PASS = "";
+   //static final String USER = "root";
+   //static final String PASS = "";
    
    
    //@Database variables
@@ -44,7 +50,7 @@ public class FirstExample {
 	 public static void main(String[] args){
 		   //connect("jdbc:mysql://localhost/phplogin","root","","Deividas");
 		   
-		 //update("root", "", "Sexy Beast","SEXY BITCH", "232334", "sexy@gmail.com","Kaunas Rokakiemio 10","trish");
+		 
 		 //insert("root", "", "Johnas", "Jamies", "9283723", "Waterford Cork Rd 300", "jamie@gmail.com");
 		 //insert("root", "",2, "Johnas", "Jamies", 86023232, "Waterford Cork Rd 300", "john888", "password","jamie@gmail.com");
 		
@@ -142,7 +148,6 @@ public class FirstExample {
 			     
 			     if (rowsUpdated > 0) {
 			    	 showMessageDialog("An existing user was updated successfully!");
-			        // System.out.println("An existing user was updated successfully!");
 			     }		
 	
 			   
@@ -235,9 +240,10 @@ public class FirstExample {
 				        +" (ID, Name, Surname, Phone, Address, User, Password, Email)"
 				        +" values ('" + userID + "','" + userName + "','" + userSurname + "','" + userPhone + "','" + userAddress + "','" + userNic + "','" + userPassword + "','" + userEmail + "')";
 			   statement.executeUpdate(sql);
+			   
 			   //@Display Message
 			   showMessageDialog("New Contact Created!");
-			   //connection.close();
+			   
 		   
 	   }catch(SQLException se){
 		   JOptionPane.showMessageDialog(null, "Can not establish connection to database!");

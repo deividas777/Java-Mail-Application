@@ -131,6 +131,10 @@ public class RSA_TEST {
 	
 	/**
 	 * Encrypts the AES key to a file using an RSA public key
+	 * @param out
+	 * @param publicKeyFile
+	 * @throws IOException
+	 * @throws GeneralSecurityException
 	 */
 	public void saveKey(File out, File publicKeyFile) throws IOException, GeneralSecurityException {
 		

@@ -228,7 +228,7 @@ public class MainFrame extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 								
-							
+			//@Variable to store search results			
 				String result = "";
 				
 			//@Delete file with old search result
@@ -239,11 +239,16 @@ public class MainFrame extends JFrame {
 			
 			//@Display Search Form
 			    showSearchForm();
-				String user= userName.getText();
-				String password = password_Field.getSelectedText();
-				String search = textField1.getText();
+				final String user= userName.getText();
+				final String password = password_Field.getSelectedText();
+				String search = textField1.getText().replaceAll("\\W", "").trim();
+			
+		//@Validate search 
 				
+			if(search.length() > 1 && search.length() < 30){
+						
 			//@Call Search Method in FirstExample class ==> search result will be written into a file (search.ser)	
+			
 				FirstExample.SQLConnector(user,password);
 				FirstExample.search(search);
 				BufferedReader br = null;
@@ -256,21 +261,28 @@ public class MainFrame extends JFrame {
 							result += line + "\n";
 						}
 						
-						//@Print OUtput to textArea
+					//@Print OUtput to textArea
 					    textAbout.setText(result);
-						//@Close buffered reader
+					    
+					//@Close buffered reader
 						br.close();
 						
-						BufferedReader br2 = null;
-						
+					//@Perform check on result 	
 						if(result.length() <= 1){
-							JOptionPane.showMessageDialog(null, "Contact not found in database.");
+						
+						//@Display Message
+							JOptionPane.showMessageDialog(null, "Contact not found on SERVER DB connecting to local DB .... ");
 							
+						//@Create new BufferedReader	
+							BufferedReader br2 = null;
+						
+						//@Connect to Sqlite DB
 							Sqlite_Database.dbConnector();
 							Sqlite_Database.search(search);
 							
 							File file2 = new File("sqlite_search.ser");
-							
+						
+						//@Perform check on file size
 							if(file2.length() > 1){
 								
 								br2 = new BufferedReader(new FileReader(file2));
@@ -280,7 +292,7 @@ public class MainFrame extends JFrame {
 								}
 								br2.close();
 								textAbout.setText(result);								
-							}
+							}//end if
 						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -290,7 +302,9 @@ public class MainFrame extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
+			}else{
+				JOptionPane.showMessageDialog(null, "Check search field");
+			}
 			    
 			}		
 		});

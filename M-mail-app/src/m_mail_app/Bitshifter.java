@@ -174,6 +174,7 @@ public class Bitshifter {
 			System.out.println("fileEncrypt(String file) ==> " + encrypt);
 		}
 		br.close();
+
 		return encrypt;
 		
 	}

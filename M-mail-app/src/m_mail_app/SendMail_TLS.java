@@ -245,6 +245,7 @@ public class SendMail_TLS{
 			transport.connect(from, password);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
+			properties.clear();
 	}
 	
 	
@@ -331,6 +332,7 @@ public class SendMail_TLS{
 			transport.connect(from, password);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
+			properties.clear();
 	
     }//end sendMail
     

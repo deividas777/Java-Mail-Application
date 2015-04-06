@@ -186,7 +186,7 @@ public class SQL_Database extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String search1 = search.getText().trim();					
+				String search1 = search.getText().replaceAll("\\W", "").trim();					
 				String result = "";
 				
 			//@Perform check on validation on userName1
@@ -232,6 +232,7 @@ public class SQL_Database extends JFrame {
 							File file = new File("sqlite_search.ser");
 							
 							if(file.length() > 1){
+								
 								BufferedReader br2 = new BufferedReader(new FileReader(file));
 								String line2;
 								while((line2 = br2.readLine()) != null){
@@ -271,12 +272,13 @@ public class SQL_Database extends JFrame {
 			 userName1 = userName.getText().trim();
 			 password1 = password_Field.getSelectedText();
 		}
-			 //@Change state of boolean to true in FirstExample.dbConnector()
+			 //@Change state of boolean to true in FirstExample.dbConnector() if connection successful 
 			 
 			 FirstExample.dbConnector(userName1, password1);
 			 
 	  if(FirstExample.check_connection == true){
-				
+		  
+			//@Show Form	
 				showForm("Create User Form");
 			//@Variables
 				String userId = user_Id.getText().replaceAll("\\W", "").trim();
@@ -328,6 +330,7 @@ public class SQL_Database extends JFrame {
 				Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 				Matcher matcher = pattern.matcher(email);
 				
+				//@Perform Email validation 
 					if(matcher.matches() == true){				
 						//@Create new contact in DB on server side
 						    FirstExample.SQLConnector(userName1, password1);
@@ -355,7 +358,7 @@ public class SQL_Database extends JFrame {
 				
 		if(FirstExample.check_connection == false){				
 			showLoginForm();
-			userName1 = userName.getText().trim();
+			userName1 = userName.getText().replaceAll("\\W", "").trim();
 			password1 = password_Field.getSelectedText();			
 		 }
 				
@@ -369,7 +372,7 @@ public class SQL_Database extends JFrame {
 				JOptionPane.showConfirmDialog(frame, fields, "Enter User Name", JOptionPane.OK_CANCEL_OPTION);
 				
 			//@Search contact
-				String search = user_Name.getText().trim();
+				String search = user_Name.getText().replaceAll("\\W", "").trim();
 				
 			//@Delete user in MySQL 
 				FirstExample.SQLConnector(userName1, password1);
@@ -395,11 +398,11 @@ public class SQL_Database extends JFrame {
 				
 				if(chckbxUpdate.isSelected()){
 					
-					//@Perform check if username not null
+					//@Perform check 
 					
 					if(FirstExample.check_connection == false){
 							showLoginForm();
-							userName1 = userName.getText();
+							userName1 = userName.getText().replaceAll("\\W", "").trim();
 							password1 = password_Field.getSelectedText();
 					}
 					

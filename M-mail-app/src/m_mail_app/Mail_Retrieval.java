@@ -110,6 +110,7 @@ public class Mail_Retrieval extends JFrame {
 	
 	final JComboBox comboBox = new JComboBox();
 	private final JCheckBox chckbxDeleteMessages = new JCheckBox("Delete Messages");
+	private final JButton btnBack = new JButton("Back");
 	
 	/**
 	 * 
@@ -189,7 +190,7 @@ public class Mail_Retrieval extends JFrame {
 	 */
 	public Mail_Retrieval() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 652, 373);
+		setBounds(100, 100, 652, 383);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -340,7 +341,7 @@ public class Mail_Retrieval extends JFrame {
 			  }//end if(matcher.matches() == true)
 			}//end
 		});
-		btnConnect.setBounds(24, 283, 102, 25);
+		btnConnect.setBounds(24, 283, 117, 25);
 		contentPane.add(btnConnect);
 		
 		
@@ -815,6 +816,17 @@ public class Mail_Retrieval extends JFrame {
 				}//end if(chckbxDecryptFile.isSelected())
 			}
 		});
+		
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				MainFrame main = new MainFrame();
+				main.setVisible(true);
+			}
+		});
+		btnBack.setBounds(24, 320, 117, 25);
+		
+		contentPane.add(btnBack);
 		
 		
 		chckbxDecryptFile.setBounds(24, 233, 124, 23);

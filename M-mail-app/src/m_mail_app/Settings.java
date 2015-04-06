@@ -56,6 +56,11 @@ public class Settings {
 
 	}//end
 	
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 */
 	 public static boolean deleteDirectory(File path) {
 	   
 		if( path.exists() ) {

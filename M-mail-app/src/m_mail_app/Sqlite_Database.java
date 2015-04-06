@@ -55,7 +55,7 @@ public class Sqlite_Database {
 			statement = connection.prepareStatement(sql);
 			ResultSet rs = statement.executeQuery();
 		
-		//@Write search result into a file ==> "sqlite_searc.ser"
+		//@Write search result into a file ==> "sqlite_search.ser"
 			
 			 file = new FileWriter("sqlite_search.ser");
 			
