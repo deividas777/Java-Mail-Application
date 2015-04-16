@@ -34,9 +34,6 @@ import javax.swing.JSeparator;
 
 public class MainFrame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3311578534357379033L;
 	private JPanel contentPane;
 	private JTextArea textAbout;

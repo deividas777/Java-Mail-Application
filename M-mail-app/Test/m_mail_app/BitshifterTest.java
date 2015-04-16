@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
@@ -36,7 +37,7 @@ public class BitshifterTest {
 		Bitshifter.fileEncrypt(file);
 		
 		String enc = "";
-		int[] ck = Bitshifter.buildChain(23);
+		int[] ck = Bitshifter.buildChain(file.length());
 		enc = Bitshifter.encrypt(Bitshifter.encrypt, ck);
 		System.out.println(enc + " " + enc.length());
 		
@@ -50,11 +51,12 @@ public class BitshifterTest {
 	}
 	
 	@Test
-	public void test_RemoveUnicode(){
+	public void test_RemoveUnicode() throws UnsupportedEncodingException{
 		
-		String unicode = "Hello";
-		String removed = Bitshifter.NCR2UnicodeString(unicode);
-		System.out.println(removed);
+		String unicode = "ĭŉŏŎŐĀņŝşŘŏĆ";
+		byte[] bs = unicode.getBytes("UTF-16");
+		//String removed = new String (bs.toString());
+		System.out.println(new String(bs, "UTF-16"));
 	}
 
 }

@@ -106,10 +106,10 @@ public class Mail_Retrieval extends JFrame {
 	final JCheckBox chckbxDecryptFile = new JCheckBox("Decrypt File");
 	final JCheckBox chckbxFileSignature = new JCheckBox("File Signature");
 	final JCheckBox chckbxTor = new JCheckBox("TOR");
-	final JCheckBox chckbxReadMessages = new JCheckBox("Read Messages");
+	final JCheckBox chckbxReadMessages = new JCheckBox("Read Emails");
 	
 	final JComboBox comboBox = new JComboBox();
-	private final JCheckBox chckbxDeleteMessages = new JCheckBox("Delete Messages");
+	private final JCheckBox chckbxDeleteMessages = new JCheckBox("Delete Emails");
 	private final JButton btnBack = new JButton("Back");
 	
 	/**
@@ -190,7 +190,7 @@ public class Mail_Retrieval extends JFrame {
 	 */
 	public Mail_Retrieval() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 652, 383);
+		setBounds(100, 100, 590, 383);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -198,7 +198,7 @@ public class Mail_Retrieval extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.RAISED, Color.RED, null, null, null));
-		scrollPane.setBounds(24, 12, 604, 196);
+		scrollPane.setBounds(24, 12, 543, 196);
 		contentPane.add(scrollPane);
 		
 		final JTextArea textArea = new JTextArea();
@@ -239,7 +239,7 @@ public class Mail_Retrieval extends JFrame {
 							
 							/**
 							 * @Retrieve Servers configuration file from server	==> (data.ser) file and write into a file
-							 * Perform check on file ==> (data_pop.ser) if doesn't exits connect to server and retriev file
+							 * Perform check on file ==> (data_pop.ser) if doesn't exits connect to server and retrieve file
 							 */				
 							File file_pop = new File("data_pop.ser");
 								if(!file_pop.exists()){
@@ -263,22 +263,7 @@ public class Mail_Retrieval extends JFrame {
 								for (String key : properties2.stringPropertyNames()) {
 								   servers.put(key, properties2.get(key).toString());
 								}							
-							/*
-							 * (Use method below only if method above will not work)
-							 * Collection of servers associated with extensions to their names
-							 								
-							Map<String, String> servers = new HashMap<String, String>();
-								
-								/*
-								 * Holds collection of available servers, Gmail, Yahoo, Hotmail, Zoho, Outlook
-								 * Can be added more if required 
-								 
-									servers.put(".*gmail.*", "pop.gmail.com");
-									servers.put(".*hotmail.*", "pop3.live.com");
-									servers.put(".*yahoo.*", "pop.mail.yahoo.com");
-									servers.put(".*zoho.*","pop.zoho.com");
-									servers.put(".*outlook.*","pop-mail.outlook.com");
-																				
+														
 							    /*
 							     * Iterate trough collection and match email address extension
 							     * with servers settings if match found proceed further
@@ -1162,7 +1147,7 @@ public class Mail_Retrieval extends JFrame {
 				}
 			}
 		});
-		chckbxDeleteMessages.setBounds(152, 301, 129, 23);		
+		chckbxDeleteMessages.setBounds(152, 284, 153, 23);		
 		contentPane.add(chckbxDeleteMessages);
 		
 		final JLabel mail_icon = new JLabel();

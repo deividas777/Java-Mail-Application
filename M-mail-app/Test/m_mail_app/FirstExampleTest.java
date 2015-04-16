@@ -15,8 +15,8 @@ import org.junit.Test;
 public class FirstExampleTest {
 	
 	//Setup
-			public String user = "root";
-			public String password = "";	
+			 final public String user = "root";
+			 final public String password = "";	
 
 	@Test
 	public void test() {
@@ -48,18 +48,39 @@ public class FirstExampleTest {
 	@Test
 	public void insert(){
 		
-		int id = 100;
-		String name = "Saule";
-		String surname = "Kaliause";
+		int id = 211;
+		String name = "Saules";
+		String surname = "Kaliauses";
 		int phone = 233434;
-		String address = "Tramore";
-		String user_name = "saule";
-		String user_password = "password";
-		String email = "saule@gmail.com";
-		
+		String address = "Tramores";
+		String user_name = "saules";
+		String user_password = "passwords";
+		String email = "saule333@gmail.com";		
 		FirstExample.SQLConnector(user, password);	
 		FirstExample.insert(id, name, surname, phone, address, user_name, user_password, email);
 		
+	}
+	
+	@Test
+	public void update(){
+	
+		int id = 211;
+		String name = "Saules";
+		String surname = "Kaliauses";
+		int phone = 233434;
+		String address = "Tramores";
+		String user_name = "saules";
+		String user_password = "passwords";
+		String email = "saule333@gmail.com";
+		
+		FirstExample.SQLConnector(user, password);	
+		FirstExample.update(id, name, surname, phone, address, user_name, user_password, email, name);	
+	}
+	
+	@Test
+	public void delete(){
+		FirstExample.SQLConnector(user, password);
+		FirstExample.delete("Saules");
 	}
 	
 	
@@ -70,6 +91,7 @@ public class FirstExampleTest {
 		String name = "dse";
 	//Search in DB
 		FirstExample.search(name);
+		
 		BufferedReader  br = new BufferedReader(new FileReader("search.ser"));
 		
 		String line;

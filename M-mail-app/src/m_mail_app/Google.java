@@ -573,14 +573,14 @@ public class Google extends JFrame{
 						
 				if(from.length() <= 255 || from.length() > 0 || to.length() <= 255 || to.length() > 0 ){
 					
-					//@Check if ISP is selected and length is > 1 and perform action if conditions right	
+					//@Check if ISP is selected and length is > 1 and perform action if conditions are right	
 						int ISP_Length = ISP.length();
+						
 					if(ISP_Length > 1){
 							System.out.println(ISP + " is selected!");
 							SendMail_TLS.sendMail_ISP2(ISP, from, to, subject, message);
 							//@show message							
-							showMessageDialog("Email Sent!");	
-							return;						
+							showMessageDialog("Email Sent!");							
 						}
 						
 					    pattern = Pattern.compile(EMAIL_PATTERN);
@@ -617,21 +617,6 @@ public class Google extends JFrame{
 							   servers.put(key, properties2.get(key).toString());
 							}
 	
-							/*
-							 * This an old method ==> use this method if a method above will not work
-							 * Holds collection of available servers, Gmail, Yahoo, Hotmail, Zoho, Outlook
-							 * Can be added more if required 
-							 
-								servers.put(".*gmail.*", "smtp.gmail.com");
-								servers.put(".*hotmail.*", "smtp.live.com");
-								servers.put(".*yahoo.*", "smtp.mail.yahoo.com");
-								servers.put(".*zoho.*","smtp.zoho.com");
-								servers.put(".*outlook.*","smtp-mail.outlook.com");
-								//servers.put(".*mail.*","smtp.mail.com");												
-						    /*
-						     * Iterate trough collection and match  email address extension
-						     * with servers settings 
-						     */
 								
 						for (Map.Entry<String, String> entry : servers.entrySet()) {
 							
@@ -658,7 +643,7 @@ public class Google extends JFrame{
 								System.out.println("Matches server settings: " + matches_server + " ==> " + input);
 								System.out.println("File Name: " + fileName);
 																
-								//@perform check on file name, depends how email will be sent to reciever								
+								//@perform check on file name, depends how email will be sent to receiver								
 							if(fileName != null){
 									
 									System.out.println("Ask Qustion!");
@@ -684,11 +669,12 @@ public class Google extends JFrame{
 										
 										String host = entry.getValue();	
 										//@Check
-									    System.out.println("Send ==> File Name: " + fileName + "  File Path: " + filePath);				    
+									    System.out.println("Send ==> File Name: " + fileName + "  File Path: " + filePath);		
+									    
 									    SendMail_TLS.sendMail(host,from, password, to, subject, message + file_signature, filePath + fileName);
 									  //@show message							
-										showMessageDialog("Email Sent Sent ... File attached ==> " + filePath+ fileName);	
-							            textArea.setText("Message Sent ... File attached ==> " + filePath+ fileName);	
+										showMessageDialog("Email Sent  ... File attached ==> " + filePath+ fileName);	
+							            textArea.setText("Email Sent ... File attached ==> " + filePath+ fileName);	
 							            chckbxAttacheFile.setSelected(false);
 							           
 							            
@@ -754,11 +740,11 @@ public class Google extends JFrame{
 						         //@perform check
 							         System.out.println("File name and Path after reseting:" + fileName + " " + filePath);
 							         
-						    }					    
+						    }			    
 						}//end Map.Entry<String, String> entry : servers.entrySet()
 						
 						 }else{
-							 
+							JOptionPane.showMessageDialog(null,"This email provider bot supported!");
 							textArea.setText("Check Email Address !");
 				   }//end if matches email 							
 				}//end input validation
@@ -1042,8 +1028,7 @@ public class Google extends JFrame{
 				if(fileName != null){
 					
 					HashFunction hash = new HashFunction();
-					
-					
+										
 					/*
 					 * Create password to encrypt file, iterate through hash function 
 					 * iteration length depends on file name length,
@@ -1051,7 +1036,7 @@ public class Google extends JFrame{
 					 */
 					
 					String password = fileName;					
-					
+				//@Perform check
 					System.out.println("Password before generating hash value: " + password);
 									
 					/*
@@ -1064,6 +1049,7 @@ public class Google extends JFrame{
 						iter = iter + 121;
 					}//end if(iter == 0)
 					
+				//@Generate Hash
 					for(int i = 0; i < iter;i++){
 						password = hash.generateHash(password);
 						System.out.println(i + " ==> " + password);
@@ -1074,6 +1060,7 @@ public class Google extends JFrame{
 					 */
 					int [] chain = Bitshifter.buildChain((password.length()/2));
 					password = Bitshifter.encrypt(password, chain);
+				//@Perform check
 					System.out.println("Password after Encrypting: " + password);
 					
 				  //Check filename and filePath
@@ -1095,18 +1082,9 @@ public class Google extends JFrame{
 				 * same value will be used to delete encrypted file on users computer 
 				 */
 				    fileName = FileOutputName;
+				  //@Perform Check
 				    System.out.println("AES encryption ==> File name after encryption: " + fileName);
 				   
-				    /*
-				     * Write encrypted password into the file ==> encrypted_password
-				     */
-				       //FileOutputStream fos = new FileOutputStream(filePath + "/TMP/encrypted_password");
-					  // byte[] pass = new byte[password.length()];
-					  // pass = password.getBytes();
-					  // fos.write(pass);
-					  //fos.close();
-					   
-				  //  System.out.println("Password written into the file!");
 				    
 				    /*
 					 * Call ZipFolder Method from Zip class, directory will be zipped

@@ -146,7 +146,7 @@ public class AESFileEncryption {
 		File file = new File(file_Path+"TMP");
 		  if(!file.exists()){
 			  if(file.mkdir()){
-                 System.out.println("Directory Created!");
+                 System.out.println("Directory Created!" + file_Path + "TMP");
                  
 		
 		        // input file to be encrypted

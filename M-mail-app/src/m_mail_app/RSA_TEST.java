@@ -15,42 +15,6 @@ public class RSA_TEST {
 	byte[] aesKey;
 	SecretKeySpec aeskeySpec;
 	
-	public static void main(String[] args) throws IOException, GeneralSecurityException, InterruptedException{
-		RSA_TEST secure = new RSA_TEST();
-
-	/*
-	 * To encrypt file make AES KEY and save into the file
-	 */
-		secure.makeKey("");
-	
-		/*
-		 * Get instances of AES and RSA encryption Chippers
-		 */
-		secure.FileEncryption();
-		
-		/*
-		 * Encrypt actual file with AES Key
-		 */
-		secure.encrypt(new File("/root/Desktop/mp3/geltona_zalia_raudona.mp3"), new File("/root/Desktop/mp3/geltona_zalia_raudona_ENCRYPTED"));		
-		/*
-		 * Encrypt AES Key with RSA Public Key
-		 */
-		secure.saveKey(new File("/root/Desktop/mp3/AES_ENCRYPTED_RSA"), new File("public.der"));
-         
-		Thread.sleep(5000);
-
-		/*
-		 * Decrypt AES Key with RSA Private Key
-		 */
-	    secure.loadKey(new File("/root/Desktop/mp3/AES_ENCRYPTED_RSA"), new File("private.der"));
-	    
-	    /*
-	     * Decrypt File with Extracted AES Key file
-	     */
-		secure.decrypt(new File("/root/Desktop/mp3/geltona_zalia_raudona_ENCRYPTED"),new File("/root/Desktop/mp3/geltona_zalia_raudona_DEcrypted.mp3"));
-	}
-	
-	
 	
 	/**
 	 * Constructor: creates ciphers
@@ -120,13 +84,6 @@ public class RSA_TEST {
 		is.read(aesKey);
 		aeskeySpec = new SecretKeySpec(aesKey, "AES");
 		
-		/*
-		 * Write to new file decrypted AES key
-		 
-		FileOutputStream fos = new FileOutputStream("AES_Decrypted_RSA");
-		ObjectOutputStream keyOOS = new ObjectOutputStream(fos);
-		keyOOS.writeObject(aeskeySpec);
-		*/
 	}
 	
 	/**
@@ -161,10 +118,8 @@ public class RSA_TEST {
 		aesCipher.init(Cipher.ENCRYPT_MODE, aeskeySpec);
 		
 		FileInputStream is = new FileInputStream(in);
-		CipherOutputStream os = new CipherOutputStream(new FileOutputStream(out), aesCipher);
-		
-		copy(is, os);
-		
+		CipherOutputStream os = new CipherOutputStream(new FileOutputStream(out), aesCipher);		
+		copy(is, os);		
 		os.close();
 	}
 	
@@ -172,13 +127,11 @@ public class RSA_TEST {
 	 * Decrypts and then copies the contents of a given file.
 	 */
 	public void decrypt(File in, File out) throws IOException, InvalidKeyException {
-		aesCipher.init(Cipher.DECRYPT_MODE, aeskeySpec);
 		
+		aesCipher.init(Cipher.DECRYPT_MODE, aeskeySpec);		
 		CipherInputStream is = new CipherInputStream(new FileInputStream(in), aesCipher);
-		FileOutputStream os = new FileOutputStream(out);
-		
-		copy(is, os);
-		
+		FileOutputStream os = new FileOutputStream(out);		
+		copy(is, os);		
 		is.close();
 		os.close();
 	}

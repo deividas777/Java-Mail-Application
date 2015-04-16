@@ -186,7 +186,7 @@ public class SQL_Database extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String search1 = search.getText().replaceAll("\\W", "").trim();					
+				String search1 = search.getText();					
 				String result = "";
 				
 			//@Perform check on validation on userName1

@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMultipart;
 public class SendMail_TLS{
 		
 	/*Set Properties*/
-	    static Properties properties = System.getProperties();
+	   static Properties properties = new Properties();
 	/*
 	 * Add proxy properties, if proxy ==> checkbox is selected 
 	 * on Google class
@@ -52,7 +52,8 @@ public class SendMail_TLS{
 	 * Clear Properties after proxy checkbox on ==> (Google.java) unselected
 	 */
 	public static void clearProperties(){
-		properties.clear();		
+		properties.clear();	
+		
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class SendMail_TLS{
 	public static void sendMail_ISP2(String mailServer, String from, String to,String subject, String messageBody) throws MessagingException, AddressException {
 
 		// Setup mail server
-			Properties props = System.getProperties();
+			Properties props = new Properties();
 			props.put("mail.smtp.host", mailServer);
 			props.setProperty("mail.smtp.port", "25");
 		
@@ -118,7 +119,7 @@ public class SendMail_TLS{
 	public static void sendMail_ISP(String mailServer, String from, String to,String subject, String messageBody,String attachFiles[]) throws MessagingException, AddressException {
 
 		// Setup mail server
-			Properties props = System.getProperties();
+			Properties props = new Properties();
 			props.put("mail.smtp.host", mailServer);
 			props.setProperty("mail.smtp.port", "25");
 		
@@ -237,7 +238,7 @@ public class SendMail_TLS{
 			message.setFrom(new InternetAddress(from));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
-			message.setContent(text, "Unicode/ 8.0");
+			message.setContent(text, "text/html; charset=utf-16");
 		/*
 		 * Send message
 		 */
@@ -245,7 +246,7 @@ public class SendMail_TLS{
 			transport.connect(from, password);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			properties.clear();
+			
 	}
 	
 	
@@ -301,7 +302,7 @@ public class SendMail_TLS{
 		       BodyPart messageBodyPart = new MimeBodyPart();
 		       
 		   // Now set the actual message
-		       messageBodyPart.setContent( text, "text/html; charset=utf-8" );
+		       messageBodyPart.setContent( text, "text/html; charset=utf-16" );
 		       //messageBodyPart.setText(text);
 		       
 		    // Create a multi part message
@@ -332,7 +333,7 @@ public class SendMail_TLS{
 			transport.connect(from, password);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			properties.clear();
+			
 	
     }//end sendMail
     
@@ -361,14 +362,18 @@ public class SendMail_TLS{
 			if(socket != null) try {
 				socket.close();
 				reachable = true;
+				return true;
 				
 			}catch(IOException ioe){
 				ioe.printStackTrace();
+				reachable = false;
+				return false;
 				
 			}
 		}
 		System.out.println(reachable);
 		return reachable;
+		
 	}
        
     /**

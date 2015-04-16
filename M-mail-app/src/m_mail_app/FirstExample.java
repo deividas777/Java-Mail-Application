@@ -47,14 +47,6 @@ public class FirstExample implements Serializable {
  		JOptionPane.showMessageDialog(frame, message);
  	}
 	 
-	 public static void main(String[] args){
-		   //connect("jdbc:mysql://localhost/phplogin","root","","Deividas");
-		   
-		 
-		 //insert("root", "", "Johnas", "Jamies", "9283723", "Waterford Cork Rd 300", "jamie@gmail.com");
-		 //insert("root", "",2, "Johnas", "Jamies", 86023232, "Waterford Cork Rd 300", "john888", "password","jamie@gmail.com");
-		
-	   }
 	 
 	 /**
 	  * 
@@ -74,7 +66,7 @@ public class FirstExample implements Serializable {
 				return connection;
 				
 			}catch(Exception e){
-				JOptionPane.showMessageDialog(null, "Can not establish connection to database!");
+				JOptionPane.showMessageDialog(null, "dbConnector Can not establish connection to database!");
 				return null;
 			}finally{
 				try{
@@ -124,7 +116,6 @@ public class FirstExample implements Serializable {
 	 
 	 public static void update(int userID, String userName, String userSurname, int userPhone, String userAddress, String userNic, String userPassword, String userEmail, String userId){
 		   
-		 //Connection connection = null;
 		 PreparedStatement statement = null;
 		 
 		 try{
@@ -246,7 +237,7 @@ public class FirstExample implements Serializable {
 			   
 		   
 	   }catch(SQLException se){
-		   JOptionPane.showMessageDialog(null, "Can not establish connection to database!");
+		   JOptionPane.showMessageDialog(null, "Please check contact details, contact with same details found in database!");
 	   }finally{
 		   //finally block used to close resources
 		      try{
