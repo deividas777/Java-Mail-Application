@@ -20,6 +20,7 @@ public class AESFileEncryption {
 	
 	public static String filePath;
 	
+	//@Test
 	public static void main(String[] args) throws Exception {
 
 		String password = "geltona_zalia_raudona.mp3";
@@ -172,26 +173,26 @@ public class AESFileEncryption {
 
 				SecretKeyFactory factory = SecretKeyFactory
 						.getInstance("PBKDF2WithHmacSHA1");
-				KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536,
-						256);
+				KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
 				SecretKey secretKey = factory.generateSecret(keySpec);
 				SecretKey secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 
-				//
 				Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 				cipher.init(Cipher.ENCRYPT_MODE, secret);
 				AlgorithmParameters params = cipher.getParameters();
 
-				// iv adds randomness to the text and just makes the mechanism more
-				// secure
-				// used while initializing the cipher
-				// file to store the iv
+				//@IV adds randomness to the text and just makes the mechanism more
+				//@Secure
+				//@Used while initializing the cipher
+				//@File to store the iv
+				
 				FileOutputStream ivOutFile = new FileOutputStream(file_Path+"TMP/"+ivOutput);
 				byte[] iv = params.getParameterSpec(IvParameterSpec.class).getIV();
 				ivOutFile.write(iv);
 				ivOutFile.close();
 
-				//file encryption
+				//@File encryption
+				
 				byte[] input = new byte[64];
 				int bytesRead;
 

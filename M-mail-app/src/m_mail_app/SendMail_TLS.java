@@ -238,7 +238,7 @@ public class SendMail_TLS{
 			message.setFrom(new InternetAddress(from));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
-			message.setContent(text, "text/html; charset=utf-16");
+			message.setContent(text, "text/plain; charset=UTF-8");
 		/*
 		 * Send message
 		 */
@@ -302,7 +302,7 @@ public class SendMail_TLS{
 		       BodyPart messageBodyPart = new MimeBodyPart();
 		       
 		   // Now set the actual message
-		       messageBodyPart.setContent( text, "text/html; charset=utf-16" );
+		       messageBodyPart.setContent( text, "text/plain; charset=UTF-8" );
 		       //messageBodyPart.setText(text);
 		       
 		    // Create a multi part message
@@ -376,28 +376,4 @@ public class SendMail_TLS{
 		
 	}
        
-    /**
-     * 
-     * @param args
-     * @throws MessagingException
-     * @throws UnknownHostException
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    public static void main(String[]args) throws MessagingException, UnknownHostException, IOException, InterruptedException{
-        	    	
-    	//SendMail_TLS mail = new SendMail_TLS();
-    	//boolean reachable = false;
-		//SendMail_TLS.checkConnection("202.112.31.203",1080,reachable);
-    	//m_proxy("115.29.251.179", "1080");
-    	//mail.proxy();
-    	int [] ch = Bitshifter.buildChain(10);
-    	String message = Bitshifter.encrypt("Hello My Friend How Are you today!", ch);
-    	//message = Bitshifter.NCR2UnicodeString(message);
-    	
-    	//sendMail("smtp.zoho.com", "deividas777@zoho.com", "menuliukas", "deividas777@zoho.com", "Test File Output", message, "PROXY.ser");
-    	sendMail_NoAttachement("smtp.zoho.com", "deividas777@zoho.com", "menuliukas", "deividas777@zoho.com", "Test UTF-8", message);
-    	//clearProperties();
-    	//sendMail("smtp.zoho.com", "deividas777@zoho.com", "", "deividas777@zoho.com", "Test MESSAGE OUT PUT FILE", "Test MESSAGE OUTPUT FILE","deividas777@zoho.com_MESSAGES.ser");
-    }
 }

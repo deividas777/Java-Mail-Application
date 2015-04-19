@@ -257,7 +257,7 @@ public class EmailAttachmentReceiver {
     }
  
     /**
-     * Runs this program with ZOHO POP server
+     * @Test Runs this program with ZOHO POP server
      */
     public static void main(String[] args) {
        

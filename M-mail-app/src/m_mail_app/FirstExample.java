@@ -13,12 +13,9 @@ import javax.swing.JOptionPane;
 
 public class FirstExample implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/*
+	/**
 	 * @Global Variables
 	 */
 	public static boolean check_connection = false;

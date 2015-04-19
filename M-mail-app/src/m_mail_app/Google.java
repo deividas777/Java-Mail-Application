@@ -580,7 +580,8 @@ public class Google extends JFrame{
 							System.out.println(ISP + " is selected!");
 							SendMail_TLS.sendMail_ISP2(ISP, from, to, subject, message);
 							//@show message							
-							showMessageDialog("Email Sent!");							
+							showMessageDialog("Email Sent!");			
+							return;
 						}
 						
 					    pattern = Pattern.compile(EMAIL_PATTERN);
@@ -663,6 +664,7 @@ public class Google extends JFrame{
 				    	    		else if(answer == JOptionPane.YES_OPTION){				    	    			
 				    	    			String file_hash = HashFunction.generateFileHash(new File(fileName));
 				    	    			file_signature = "\n\nFile Signature: " + file_hash;
+				    	    			return;
 				    	    		}
 									
 									if(!fileName.contains(".zip")){

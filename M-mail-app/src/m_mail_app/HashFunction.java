@@ -7,6 +7,7 @@ import java.security.*;
 
 public class HashFunction {
 	
+	//@Test
 	public static void main(String[] args) throws Exception{
 		HashFunction function = new HashFunction();
 		function.generateHash("Hello MY Friend");
@@ -42,6 +43,7 @@ public class HashFunction {
 		byte[] hashedBytes = md.digest();
 		return convertByteArrayToHexString(hashedBytes);
 	}
+	
 	
 	private static String convertByteArrayToHexString(byte[] arrayBytes) {
 		

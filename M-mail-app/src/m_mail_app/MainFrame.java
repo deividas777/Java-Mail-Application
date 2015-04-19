@@ -119,15 +119,8 @@ public class MainFrame extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("About the Program");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String str = "Version 2 Updated on 17/11/2013 This program is\n designed to send emails to the users." +
-						     "\nYou can choose to send emails from legitamate\nGoogle accounts or fake emails using local host.\n";
-				str += "In localhost:\n" +
-					   "f = Random source emails\n";
-				str += "r = Source and Destination random emails\n";
-				str += "a = same as r with random messages\n";
-				str += "To find local host server use nslookup tool and \nset q=mx and your ISP providers address \neg. eircom.net, vodafone.ie\n";
-				str += "And then enter the mail exchange server\n";
-				str += "Added Encryption Option, RSA, Bitshifter and SHA-1 generation function!";
+				String str = "Version 1 Updated on 10/4/2015 This program is\n designed to send emails to the users." +
+						     "\nYou can choose to send emails from legitamate\nGoogle \nYahoo \nHotmail \nZoho \nOutlook accounts or using ISP email exchange server\n";
 				JOptionPane.showMessageDialog(null, str);
 				
 			}

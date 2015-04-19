@@ -14,12 +14,12 @@ public class SendMailt_TLS_Test {
 	
 	
 	String host = "smtp.live.com";
-	String from = "****";
+	String from = "***@hotmail.com";
 	String password = "****";
-	String to = "****";
+	String to = "***@zoho.com";
 	String subject = "Test JUnit";
 	String text = "Test TEST TEST";
-	String filename = "****";
+	String filename = "ISP.ser";
 	
 	//@Test	
 	public void test_sendThrough_ISP() throws AddressException, MessagingException{
@@ -79,12 +79,12 @@ public class SendMailt_TLS_Test {
 	    }
 	}
  
-	//@Test
+	@Test
 	public void test() throws MessagingException {
 		
 	//send mail
-		//int[] ck = Bitshifter.buildChain(text.length());
-		//text = Bitshifter.encrypt(text, ck);
+		int[] ck = Bitshifter.buildChain(text.length());
+		text = Bitshifter.encrypt(text, ck);
 		SendMail_TLS.sendMail(host, from, password, to, subject, text, filename);
 		
 	}

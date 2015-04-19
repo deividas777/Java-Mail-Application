@@ -12,6 +12,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESFileDecryption {
+	//@Test
 	public static void main(String[] args) throws Exception {
 
 		fileDecryption("/root/Attachment/TMP/rules.sh_encrypted.des", "/root/Attachment/rules.sh","ｍｍﾀｕｕｐｇｋｆｈｷｷｼｹ［ｬｂｅｮﾁｾｖｏﾂﾂｲｂｅｷｶｌｏｋｫｯ＼＾ｮｿｓ","/root/Attachment/TMP/salt.enc", "/root/Attachment/TMP/iv.enc");

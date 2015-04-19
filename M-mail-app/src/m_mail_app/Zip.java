@@ -10,7 +10,7 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-	
+	//@Test
 	public static void main( String[] args ){
     	
 		//ZipFile("/root/Desktop/104NIKON/DSCN0783.JPG", "DSCN0783.JPG.zip", "DSCN0783.JPG");

@@ -119,6 +119,9 @@ public class Settings {
 		
 	}//end
 	
+   
+   //@Future Implementation
+   
 	public static void ConverToGrayScale(String file, String outputName, String extension) {
 		
 		BufferedImage image;
